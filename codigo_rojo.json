@@ -1,45 +1,77 @@
 {
-  "_nota": "Palabras y frases de alerta. Se comparan contra el texto normalizado (minúsculas, sin acentos), como palabras completas. Un * al final significa 'cualquier terminación' (suicid* detecta suicidio, suicidarme...). Revisar con el equipo de Treselefantes antes de cualquier uso real.",
+  "_nota": "Palabras y frases de alerta. Se comparan contra el texto normalizado (minúsculas, sin acentos, sin letras repetidas), como palabras completas. Un * al final acepta cualquier terminación. En palabras de 6 letras o más se tolera un error de dedo, excepto en las dos últimas letras. Se revisan en CADA mensaje, antes que cualquier otra cosa. Validar con especialistas de Treselefantes antes de cualquier uso real.",
   "categorias": [
     {
       "id": "riesgo_vida",
       "nombre": "Riesgo para la vida",
       "frases": [
         "suicid*",
-        "quitarme la vida",
+        "me quiero morir",
         "quiero morir*",
-        "ya no quiero vivir",
+        "me quiero matar",
         "matarme",
+        "me voy a matar",
+        "quitarme la vida",
+        "ya no quiero vivir",
+        "no quiero seguir viviendo",
+        "no vale la pena vivir",
+        "mejor muert*",
+        "desaparecer para siempre",
         "hacerme dano",
         "cortarme",
         "lastimarme",
+        "autolesi*",
         "se quiere morir",
+        "quiere morir*",
         "quiere quitarse la vida",
+        "se quiere matar",
+        "se quiere suicidar",
         "se corta",
         "se esta cortando",
         "se lastima a proposito",
-        "quiere morir*"
+        "se hace dano"
       ]
     },
     {
       "id": "violencia",
       "nombre": "Violencia o abuso",
       "frases": [
+        "me pego",
+        "me golpeo",
         "me pega",
+        "me pego mi",
         "me golpea",
+        "me golpeo mi",
+        "nos pega",
+        "nos golpea",
         "le pega a mi hij*",
+        "le pego a mi hij*",
         "golpea a mi hij*",
+        "golpeo a mi hij*",
         "abuso",
         "abuso sexual",
         "abusaron",
         "abusa de",
+        "abuso de mi hij*",
         "tocamientos",
         "la toco",
         "lo toco",
+        "la toca",
+        "lo toca",
+        "le toca sus partes",
         "maltrato",
+        "maltrata",
         "violencia",
+        "violaron",
+        "violacion",
         "me amenaza",
-        "amenaza con"
+        "amenaza con",
+        "me encierra",
+        "lo encierra",
+        "la encierra",
+        "moretones",
+        "me quiere matar",
+        "nos quiere matar"
       ]
     },
     {
@@ -47,12 +79,24 @@
       "nombre": "Emergencia médica",
       "frases": [
         "no respira",
+        "le cuesta respirar",
         "convulsion*",
         "se intoxico",
+        "intoxicad*",
         "se trago",
+        "se envenen*",
+        "envenenad*",
         "inconsciente",
         "no despierta",
-        "esta sangrando mucho"
+        "se desmayo",
+        "sangrando mucho",
+        "sangra mucho",
+        "golpe en la cabeza",
+        "sobredosis",
+        "se tomo unas pastillas",
+        "se tomo las pastillas",
+        "se quemo con",
+        "quemadura grave"
       ]
     },
     {
@@ -64,8 +108,29 @@
         "no lo encuentro",
         "no la encuentro",
         "no regreso a casa",
+        "no ha llegado",
+        "no sabemos donde esta",
+        "se escapo",
         "se lo llevaron",
-        "se la llevaron"
+        "se la llevaron",
+        "secuestr*"
+      ]
+    },
+    {
+      "id": "riesgo_digital",
+      "nombre": "Riesgo en internet",
+      "frases": [
+        "le pide fotos",
+        "le pidio fotos",
+        "le pidieron fotos",
+        "fotos intimas",
+        "fotos desnud*",
+        "sextorsion",
+        "amenazan con publicar",
+        "amenaza con publicar",
+        "se va a ver con un desconocido",
+        "conocio en internet",
+        "fotos sin ropa"
       ]
     },
     {
@@ -73,11 +138,19 @@
       "nombre": "Crisis del cuidador",
       "frases": [
         "no puedo mas",
+        "ya no puedo mas",
         "ganas de pegarle",
         "le voy a pegar",
         "le voy a hacer algo",
         "perdi el control",
-        "voy a explotar"
+        "voy a explotar",
+        "ganas de desaparecer",
+        "ganas de irme y dejarlos",
+        "quiero abandonar*",
+        "ya no los aguanto",
+        "lo quiero matar",
+        "la quiero matar",
+        "los voy a matar"
       ]
     }
   ],
@@ -97,6 +170,12 @@
       }
     ],
     "boton_revision": "Quiero que una persona revise mi caso",
-    "confirmacion_revision": "Registré tu solicitud. En la versión real de Treselefantes, una persona del equipo revisaría tu caso y te contactaría. Mientras tanto, los teléfonos de arriba están disponibles las 24 horas."
+    "confirmacion_revision": "Registré tu solicitud. En la versión real de Treselefantes, una persona del equipo revisaría tu caso y te contactaría. Mientras tanto, los teléfonos de arriba están disponibles las 24 horas.",
+    "seguimiento": "Sigo aquí contigo. Si en algún momento hay peligro, los teléfonos de emergencia están arriba del chat.",
+    "botones_despues": [
+      "Ya estamos a salvo",
+      "Quiero hablar con un especialista",
+      "Gracias"
+    ]
   }
 }

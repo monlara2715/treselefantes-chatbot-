@@ -1,29 +1,36 @@
 /* Treselefantes · Acompañante — estilos
    Paleta cálida y tranquila; todos los colores son variables para modo claro y oscuro. */
+/* Paleta Treselefantes: rojos ladrillo y tierras.
+   El rojo de marca (--accent) es cálido y terroso; el Código Rojo (--alert) es un carmesí más intenso
+   y además cambia de forma (cabecera oscura con ícono) para no confundirse con la marca. */
 :root {
-  --bg: #f5f4ef;
-  --surface: #ffffff;
-  --surface-2: #eef3f0;
-  --fg: #22302b;
-  --muted: #5f6d68;
-  --border: #d9dfdb;
-  --accent: #2f7d6d;
-  --accent-fg: #ffffff;
-  --bot: #eef3f0;
-  --user: #2f7d6d;
-  --user-fg: #ffffff;
-  --tip: #fdf3e1;
-  --tip-border: #e2b765;
-  --alert: #b4372f;
-  --alert-bg: #fbeceb;
+  --bg: #f6eee6;
+  --surface: #fffaf5;
+  --surface-2: #f1e3d6;
+  --fg: #3b241d;
+  --muted: #7b6055;
+  --border: #e3d0c1;
+  --accent: #9c3324;
+  --accent-fg: #fffaf5;
+  --accent-2: #c0663d;
+  --bot: #f3e6da;
+  --user: #9c3324;
+  --user-fg: #fffaf5;
+  --tip: #f5e6cf;
+  --tip-border: #b8823f;
+  --bar-ok: #c0663d;
+  --alert: #8c0d1f;
+  --alert-fg: #ffffff;
+  --alert-bg: #fdebec;
   --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
   --body: "Figtree", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #131a18; --surface: #1b2421; --surface-2: #22302b; --fg: #e5ece9; --muted: #9fb0aa;
-    --border: #33423d; --accent: #6cc4b0; --accent-fg: #0f1a17; --bot: #22302b; --user: #3f8f7e;
-    --user-fg: #ffffff; --tip: #3a3020; --tip-border: #c9a052; --alert: #f08a80; --alert-bg: #3a2220;
+    --bg: #1c1411; --surface: #261b17; --surface-2: #33241e; --fg: #f3e6dc; --muted: #c0a797;
+    --border: #48332a; --accent: #e07a5f; --accent-fg: #1c1411; --accent-2: #d99566; --bot: #33241e;
+    --user: #b4472f; --user-fg: #fff7f0; --tip: #3c2c1d; --tip-border: #c9995a; --bar-ok: #d99566;
+    --alert: #ff6670; --alert-fg: #2a0a0d; --alert-bg: #3a1417;
     color-scheme: dark;
   }
 }
@@ -69,14 +76,14 @@ button { font: inherit; cursor: pointer; }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .chips li { font-size: 14px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); }
 .grafica svg { width: 100%; height: auto; display: block; }
-.grafica .barra { fill: var(--accent); }
-.grafica .barra.alta { fill: var(--alert); }
+.grafica .barra { fill: var(--bar-ok); }
+.grafica .barra.alta { fill: var(--accent); }
 .grafica text { fill: var(--muted); font-size: 11px; font-family: var(--body); }
 .rueda { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .rueda li { display: grid; grid-template-columns: 110px 1fr 22px; align-items: center; gap: 8px; font-size: 13px; }
 .rueda .pista { display: block; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
-.rueda .relleno { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
-.rueda li.baja .relleno { background: var(--tip-border); }
+.rueda .relleno { display: block; height: 100%; background: var(--accent-2); border-radius: 4px; }
+.rueda li.baja .relleno { background: var(--accent); }
 .rueda li.baja { font-weight: 600; }
 .rueda .num { text-align: right; font-variant-numeric: tabular-nums; }
 .cruces { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
@@ -85,6 +92,7 @@ button { font: inherit; cursor: pointer; }
 
 .chat { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; min-height: 70vh; max-height: calc(100vh - 120px); overflow: hidden; }
 .aviso { margin: 0; padding: 10px 18px; font-size: 14px; background: var(--surface-2); border-bottom: 1px solid var(--border); color: var(--muted); }
+.mensajes > * { flex-shrink: 0; }
 .mensajes { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .burbuja { max-width: min(78%, 60ch); padding: 10px 14px; border-radius: 16px; white-space: pre-line; }
 .burbuja.bot { background: var(--bot); align-self: flex-start; border-bottom-left-radius: 4px; }
@@ -98,18 +106,26 @@ button { font: inherit; cursor: pointer; }
 .escribiendo span:nth-child(3) { animation-delay: .3s; }
 @keyframes puntos { 0%, 80%, 100% { opacity: .3; } 40% { opacity: 1; } }
 
-/* Código Rojo */
-.alerta { align-self: stretch; border: 2px solid var(--alert); background: var(--alert-bg); border-radius: 14px; padding: 16px; display: grid; gap: 10px; }
+/* Código Rojo: forma distinta a la marca (cabecera sólida + ícono) */
+.alerta { align-self: stretch; border: 2px solid var(--alert); background: var(--alert-bg); border-radius: 14px; overflow: hidden; }
+.alerta-cabecera { background: var(--alert); color: var(--alert-fg); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+.alerta-icono { width: 20px; height: 20px; border-radius: 50%; background: var(--alert-fg); color: var(--alert); display: grid; place-items: center; font-size: 13px; }
+.alerta-cuerpo { padding: 14px 16px 16px; display: grid; gap: 10px; }
 .alerta h3 { color: var(--alert); font-size: 18px; }
 .alerta p { margin: 0; }
 .recursos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.recursos li { background: var(--surface); border-radius: 10px; padding: 10px 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+.recursos li { background: var(--surface); border-radius: 10px; padding: 10px 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; }
 .recursos .tel { font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--alert); text-decoration: none; font-variant-numeric: tabular-nums; }
-.btn-alerta { background: var(--alert); color: #fff; border: 0; border-radius: 10px; padding: 10px 14px; font-weight: 600; justify-self: start; }
+.btn-alerta { background: var(--alert); color: var(--alert-fg); border: 0; border-radius: 10px; padding: 10px 14px; font-weight: 600; justify-self: start; }
 .btn-alerta:disabled { opacity: .6; cursor: default; }
+/* Barra fija de emergencia: siempre visible; se resalta tras un Código Rojo */
+.barra-emergencia { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 8px 18px; font-size: 13px; background: var(--surface); border-bottom: 1px solid var(--border); color: var(--muted); }
+.barra-emergencia strong { color: var(--fg); }
+.barra-emergencia.activa { background: var(--alert); color: var(--alert-fg); }
+.barra-emergencia.activa strong { color: var(--alert-fg); }
 
 .botones-rapidos { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 10px; }
-.botones-rapidos button { background: var(--surface); border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
+.botones-rapidos button { background: var(--surface); border: 1px solid var(--accent-2); color: var(--accent); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
 .botones-rapidos button:hover { background: var(--surface-2); }
 .entrada { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
 .entrada input { flex: 1; min-width: 0; font: inherit; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); }

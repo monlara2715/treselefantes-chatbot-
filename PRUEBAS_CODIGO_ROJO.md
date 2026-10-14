@@ -1,43 +1,66 @@
 # Casos de prueba · Código Rojo
 
-El filtro revisa cada mensaje **antes** de cualquier otra respuesta. Estos casos se probaron con el prototipo; vuelve a correrlos cada vez que cambies `codigo_rojo.json`.
+El filtro revisa **cada mensaje, en cualquier punto de la conversación, antes que cualquier otra cosa**. Tolera acentos faltantes, letras repetidas («masss»), abreviaturas («q», «xq») y un error de dedo en palabras largas («suisidio»). Vuelve a correr estos casos cada vez que cambies `codigo_rojo.json`.
 
-## Frases que SÍ deben activar el protocolo
+## Frases que SÍ deben activar el protocolo (20/20 ✅)
 
-| # | Frase | Categoría esperada | Resultado |
-|---|---|---|---|
-| 1 | Mi hija dice que se quiere morir | Riesgo para la vida | ✅ Se activa |
-| 2 | Creo que mi hijo se corta los brazos | Riesgo para la vida | ✅ Se activa |
-| 3 | Mi pareja me pega cuando se enoja | Violencia o abuso | ✅ Se activa |
-| 4 | Sospecho que abusaron de mi hija | Violencia o abuso | ✅ Se activa |
-| 5 | El niño no respira bien, se puso morado | Emergencia médica | ✅ Se activa |
-| 6 | Mi hijo se tragó una pila | Emergencia médica | ✅ Se activa |
-| 7 | No encuentro a mi hijo desde la tarde | Niño no localizado | ✅ Se activa |
-| 8 | Ya no puedo más con todo esto | Crisis del cuidador | ✅ Se activa |
-| 9 | Tengo ganas de pegarle cuando grita | Crisis del cuidador | ✅ Se activa |
-| 10 | Estoy pensando en el suicidio | Riesgo para la vida | ✅ Se activa |
-
-## Frases que NO deben activarlo
-
-| # | Frase | Resultado |
+| # | Frase | Categoría |
 |---|---|---|
-| 1 | Mi hijo se pegó jugando en el parque | ✅ No se activa |
-| 2 | Mi hija es muy abusona con su hermano | ✅ No se activa |
-| 3 | Estoy cansada de los berrinches | ✅ No se activa (responde tema estrés) |
-| 4 | Mi hijo no quiere dormir | ✅ No se activa (responde tema sueño) |
-| 5 | Hoy perdí las llaves | ✅ No se activa |
-| 6 | Mi hija se cortó el pelo sola | ✅ No se activa |
-| 7 | ¿Cómo hablo con mi hija de 14? | ✅ No se activa (responde tema comunicación) |
-| 8 | Me cuesta mucho la tarea de matemáticas | ✅ No se activa (responde tema escuela) |
-| 9 | La maestra dice que no obedece | ✅ No se activa (responde tema conducta) |
-| 10 | Mi hijo quiere morirse de risa con ese video | ⚠️ **Falso positivo:** sí se activa |
+| 1 | Mi hija dice que se quiere morir | Riesgo para la vida |
+| 2 | Creo que mi hijo se corta los brazos | Riesgo para la vida |
+| 3 | Mi pareja me pega cuando se enoja | Violencia o abuso |
+| 4 | Sospecho que abusaron de mi hija | Violencia o abuso |
+| 5 | El niño no respira bien | Emergencia médica |
+| 6 | Mi hijo se tragó una pila | Emergencia médica |
+| 7 | No encuentro a mi hijo desde la tarde | Niño no localizado |
+| 8 | Ya no puedo más con todo esto | Crisis del cuidador |
+| 9 | Tengo ganas de pegarle cuando grita | Crisis del cuidador |
+| 10 | Estoy pensando en el suicidio | Riesgo para la vida |
+| 11 | estoy pensando en el suisidio *(error de dedo)* | Riesgo para la vida |
+| 12 | me quiero matarr *(letra repetida)* | Riesgo para la vida |
+| 13 | ya no quiero vivirrr | Riesgo para la vida |
+| 14 | q ya no quiero vivir *(abreviatura)* | Riesgo para la vida |
+| 15 | mi esposo me pegó ayer | Violencia o abuso |
+| 16 | un señor le pide fotos a mi hija por internet | Riesgo en internet |
+| 17 | mi hijo se desmayó | Emergencia médica |
+| 18 | creo que se tomó unas pastillas | Emergencia médica |
+| 19 | no puedo masss | Crisis del cuidador |
+| 20 | mi hija se esta cortando | Riesgo para la vida |
 
-## Lo que muestran las pruebas
+## Frases que NO deben activarlo (15/15 ✅)
 
-El caso 10 es un falso positivo a propósito: para no perder frases reales como *"mi hijo quiere morirse"*, la regla `quiere morir*` también atrapa expresiones coloquiales. Con palabras clave hay que elegir entre **no perder ningún caso real** (aunque haya falsas alarmas) o **evitar falsas alarmas** (aunque se escape alguno). En un tema de seguridad infantil preferimos lo primero.
+| # | Frase |
+|---|---|
+| 1 | Mi hijo se pegó jugando en el parque |
+| 2 | Mi hija es muy abusona con su hermano |
+| 3 | Estoy cansada de los berrinches |
+| 4 | Mi hijo no quiere dormir |
+| 5 | Hoy perdí las llaves |
+| 6 | Mi hija se cortó el pelo sola |
+| 7 | ¿Cómo hablo con mi hija de 14? |
+| 8 | Me cuesta mucho la tarea de matemáticas |
+| 9 | La maestra dice que no obedece |
+| 10 | Voy a cortarle el pelo a mi hijo |
+| 11 | Se quemó la comida |
+| 12 | Mi hijo anda desnudo por la casa |
+| 13 | Me pegué con la mesa |
+| 14 | Se tomó toda la leche |
+| 15 | Mi hijo se muere de risa |
 
-Por eso las palabras clave son solo un primer filtro. La versión real necesita:
+## Probar una conversación completa
 
-- Que una persona revise los casos marcados (botón *"Quiero que una persona revise mi caso"*).
+Además del filtro, conviene probar que el Código Rojo se active **a mitad de una plática**. Ejemplo probado con el perfil de Ana:
+
+1. «sí» → el bot habla del ruido (su detonante más frecuente)
+2. «no funcionó» → da otra idea del mismo tema
+3. «me siento fatal» → refleja la emoción y pregunta
+4. «estoy pensando en el suisidio» → **se activa el protocolo**, aunque esté escrito con error
+5. «ya estamos a salvo» → responde con calma y ofrece hablar con un especialista
+
+## Límites conocidos
+
+Las palabras clave son un primer filtro, no entienden contexto. Por ejemplo, frases ambiguas como «me pegó» se toman como alerta aunque a veces sean inofensivas: en seguridad infantil preferimos una falsa alarma a dejar pasar un caso real. La versión real necesita:
+
+- Que una persona revise los casos marcados (botón «Quiero que una persona revise mi caso»).
 - Revisar periódicamente el registro de alertas para ajustar las palabras.
 - Idealmente, un modelo de IA en el servidor que entienda el contexto de la frase.

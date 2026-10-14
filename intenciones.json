@@ -1,26 +1,142 @@
 {
-  "_nota": "Cada intención tiene palabras clave (texto normalizado: minúsculas, sin acentos; * = cualquier terminación) y respuestas. 'por_edad' elige el texto según la edad del niño o del grupo. Variables disponibles: {nombre}, {hijo}, {edad}, {area_baja}.",
+  "_nota": "Intenciones del acompañante. 'palabras' se comparan con el texto normalizado (minúsculas, sin acentos); * = cualquier terminación; se toleran errores de dedo de una letra en palabras largas. 'respuestas' y 'por_edad' rotan para no repetirse; 'mas' son ideas adicionales cuando la persona dice «sí», «¿qué más?» o «no funcionó». Variables: {nombre}, {hijo}, {edad}, {area_baja}.",
   "intenciones": [
+    {
+      "id": "afirmacion",
+      "nombre": "Sí / de acuerdo",
+      "tipo": "conversacion",
+      "palabras": [
+        "si",
+        "sip",
+        "claro",
+        "ok",
+        "okay",
+        "va",
+        "dale",
+        "por favor",
+        "aja",
+        "sale",
+        "de acuerdo",
+        "me gustaria",
+        "esta bien",
+        "bueno",
+        "porfa"
+      ],
+      "botones": []
+    },
+    {
+      "id": "negacion",
+      "nombre": "No",
+      "tipo": "conversacion",
+      "palabras": [
+        "no",
+        "nel",
+        "no gracias",
+        "ahorita no",
+        "mejor no",
+        "para nada",
+        "todavia no"
+      ],
+      "botones": []
+    },
+    {
+      "id": "mas_info",
+      "nombre": "Pedir más",
+      "tipo": "conversacion",
+      "palabras": [
+        "que mas",
+        "otra idea",
+        "otra cosa",
+        "mas ideas",
+        "y que hago",
+        "que hago",
+        "que puedo hacer",
+        "no funciona",
+        "no funciono",
+        "ya lo intente",
+        "ya intente",
+        "como le hago",
+        "como lo hago",
+        "algo mas",
+        "dame mas",
+        "sigue",
+        "y luego",
+        "explicame",
+        "no sirve"
+      ],
+      "botones": []
+    },
+    {
+      "id": "a_salvo",
+      "nombre": "Ya a salvo",
+      "tipo": "tema",
+      "palabras": [
+        "a salvo",
+        "ya estoy bien",
+        "ya estamos bien",
+        "estamos bien",
+        "ya paso",
+        "ya estoy mejor",
+        "ya se calmo"
+      ],
+      "respuestas": [
+        "Me alegra mucho leer eso. Gracias por avisarme. Cuando te sientas lista/o, podemos platicar con calma de lo que pasó o de cómo prevenirlo."
+      ],
+      "botones": [
+        "Quiero hablar con un especialista",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "hijos_general",
+      "nombre": "Algo con mis hijos",
+      "tipo": "tema",
+      "palabras": [
+        "con mis hijos",
+        "con mi hijo",
+        "con mi hija",
+        "con los ninos",
+        "con mis nietos",
+        "con mi nieto",
+        "con mi nieta"
+      ],
+      "respuestas": [
+        "Entiendo. ¿Qué está pasando con {hijo}? Puede ser su conducta, el sueño, la escuela, las pantallas o cómo se comunican. Cuéntamelo con tus palabras o elige un tema."
+      ],
+      "botones": [
+        "Berrinches",
+        "Problemas para dormir",
+        "Escuela y tareas",
+        "Pantallas y celular"
+      ]
+    },
     {
       "id": "saludo",
       "nombre": "Saludo",
+      "tipo": "tema",
       "palabras": [
         "hola",
         "buenos dias",
         "buenas tardes",
         "buenas noches",
-        "que tal"
+        "que tal",
+        "buen dia",
+        "hey"
       ],
-      "respuesta": "¡Hola, {nombre}! ¿En qué te acompaño hoy?",
+      "respuestas": [
+        "¡Hola, {nombre}! ¿En qué te acompaño hoy?",
+        "Hola, {nombre}. Aquí estoy. ¿Qué te gustaría platicar?"
+      ],
       "botones": [
         "Me siento estresada/o",
         "Problemas para dormir",
-        "¿Cómo lleno mi bitácora?"
+        "Berrinches"
       ]
     },
     {
       "id": "estres",
       "nombre": "Estrés y cansancio",
+      "tipo": "tema",
       "palabras": [
         "estres*",
         "estresad*",
@@ -28,21 +144,215 @@
         "agotad*",
         "abrumad*",
         "ansios*",
+        "ansiedad",
         "harta",
         "harto",
+        "sin energia",
+        "no tengo energia",
+        "rebasad*",
+        "presion",
+        "tension",
+        "nervios*",
+        "colapsad*",
+        "quemad*",
+        "exhaust*",
+        "sin fuerzas",
         "me siento mal",
-        "sin energia"
+        "mal dia",
+        "dia pesado",
+        "semana pesada",
+        "conmigo",
+        "es por mi"
       ],
-      "respuesta": "Cuidar a otros cansa, y que lo notes ya es un buen paso. Te propongo algo pequeño para hoy: elige un momento de 10 minutos solo para ti y anótalo en tu bitácora. Tu área más baja en la Rueda de la Vida es «{area_baja}»; podemos empezar por ahí.",
+      "respuestas": [
+        "Cuidar a otros cansa, y que lo notes ya es un buen paso. Para hoy te propongo algo pequeño: 10 minutos solo para ti, y anotarlo en tu bitácora. Tu área más baja en la Rueda de la Vida es «{area_baja}»; podemos empezar por ahí.",
+        "Se escucha pesado lo que estás cargando. Antes de resolver nada: respira hondo tres veces, soltando el aire más lento de lo que lo tomas. Eso baja la activación del cuerpo en menos de un minuto."
+      ],
+      "mas": [
+        "Una idea práctica: escribe en un papel las 3 cosas que más te pesan hoy y marca cuál puedes delegar, posponer o simplemente soltar. No todo tiene que hacerse hoy.",
+        "Revisa tu bitácora de la semana: ¿el estrés sube ciertos días o a ciertas horas? Si encontramos el patrón, podemos preparar ese momento con anticipación.",
+        "Pedir ayuda también es cuidar. ¿Hay alguien (pareja, familiar, vecina, otra mamá o papá de la escuela) que pueda cubrirte una hora esta semana?",
+        "Si el cansancio dura varias semanas y no mejora con descanso, vale la pena platicarlo con un médico o un psicólogo. Si quieres, te explico cómo te podemos canalizar."
+      ],
+      "pregunta": "¿Quieres otra idea para bajar el estrés?",
       "botones": [
         "Ideas para tiempo para mí",
-        "¿Cómo lleno mi bitácora?",
-        "Ver mi Rueda de la Vida"
+        "Nadie me ayuda",
+        "¿Cómo lleno mi bitácora?"
+      ]
+    },
+    {
+      "id": "tristeza",
+      "nombre": "Tristeza",
+      "tipo": "tema",
+      "palabras": [
+        "triste*",
+        "tristeza",
+        "llorar",
+        "lloro",
+        "llorando",
+        "deprimid*",
+        "desanimad*",
+        "bajonead*",
+        "vacia",
+        "vacio",
+        "sin ganas",
+        "desmotivad*",
+        "melancol*"
+      ],
+      "respuestas": [
+        "Gracias por contarme cómo te sientes. Estar triste no te hace peor madre, padre o cuidador; te hace humana/o. ¿Sabes qué la detonó, o llegó sin una razón clara?",
+        "Lamento que te sientas así. A veces ayuda ponerle nombre: ¿es tristeza, cansancio, soledad o una mezcla? No tienes que tener la respuesta ahora."
+      ],
+      "mas": [
+        "Algo que ayuda: salir 10 minutos a caminar con luz de día y sin celular. El cuerpo en movimiento suele aliviar un poco la carga.",
+        "Hablarlo con alguien de confianza ayuda más de lo que parece. ¿Hay alguien a quien puedas llamar hoy?",
+        "Si la tristeza dura más de dos semanas, te quita el sueño o el apetito, es importante buscar a un profesional. Pedir ayuda es un acto de cuidado, también hacia tus hijos."
+      ],
+      "pregunta": "¿Quieres que te comparta algo que puede ayudarte hoy?",
+      "botones": [
+        "Quiero hablar con un especialista",
+        "Ideas para tiempo para mí"
+      ]
+    },
+    {
+      "id": "culpa",
+      "nombre": "Culpa",
+      "tipo": "tema",
+      "palabras": [
+        "culpa",
+        "culpable",
+        "mala madre",
+        "mal padre",
+        "mala mama",
+        "mal papa",
+        "lo estoy haciendo mal",
+        "soy mala",
+        "soy malo",
+        "fallando",
+        "fracas*",
+        "no soy buena",
+        "no soy bueno",
+        "me arrepiento"
+      ],
+      "respuestas": [
+        "Que te preocupe hacerlo bien ya dice mucho de ti. No existe la crianza perfecta; lo que más protege a los niños es la reparación: reconocer cuando nos equivocamos y volver a conectar.",
+        "La culpa suele aparecer cuando estamos cansados y exigiéndonos de más. ¿Qué te dirías si una amiga te contara lo mismo?"
+      ],
+      "mas": [
+        "Si sientes que reaccionaste mal, puedes reparar: «Hace rato te grité y no estuvo bien. Estaba muy cansada. Te quiero». Eso enseña más que no equivocarse nunca.",
+        "Haz una lista corta de tres cosas que sí hiciste bien hoy por tus hijos, aunque sean pequeñas. La culpa nos hace ver solo lo que falta."
+      ],
+      "pregunta": "¿Te comparto cómo reparar después de un mal momento?",
+      "botones": [
+        "Pierdo la paciencia",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "enojo",
+      "nombre": "Enojo del cuidador",
+      "tipo": "tema",
+      "palabras": [
+        "pierdo la paciencia",
+        "me enojo",
+        "me enoja",
+        "les grito",
+        "le grito",
+        "grito mucho",
+        "exploto",
+        "me desespero",
+        "desesperad*",
+        "me saca de quicio",
+        "coraje",
+        "enojad*",
+        "furios*",
+        "irritable"
+      ],
+      "respuestas": [
+        "Perder la paciencia le pasa a todas las personas que cuidan, sobre todo cuando están cansadas. Una técnica rápida: cuando sientas que vas a explotar, di en voz alta «necesito un minuto», aléjate unos pasos y respira antes de responder.",
+        "El enojo es una señal de que algo te está rebasando. Ponerle nombre ayuda: «estoy muy enojada y necesito calmarme antes de hablar». Así también le enseñas a tu hijo/a a manejar sus emociones."
+      ],
+      "mas": [
+        "Identifica tus detonantes: ¿pasa más en la mañana con prisas, en la tarde con tareas, o en la noche con cansancio? Preparar ese momento baja mucho los gritos.",
+        "Después de un mal momento, repara: reconoce lo que pasó y vuelve a conectar con un abrazo o un rato juntos. Eso fortalece el vínculo.",
+        "Si sientes que tu enojo llega a ser peligroso para ti o para los niños, es importante pedir ayuda ya. Escríbeme «necesito ayuda» y te comparto a dónde llamar."
+      ],
+      "pregunta": "¿Quieres otra estrategia para esos momentos?",
+      "botones": [
+        "Me siento culpable",
+        "Berrinches"
+      ]
+    },
+    {
+      "id": "soledad",
+      "nombre": "Soledad / falta de apoyo",
+      "tipo": "tema",
+      "palabras": [
+        "me siento sola",
+        "me siento solo",
+        "estoy sola",
+        "estoy solo",
+        "sola con todo",
+        "solo con todo",
+        "nadie me ayuda",
+        "no tengo ayuda",
+        "no tengo apoyo",
+        "todo yo",
+        "todo lo hago yo",
+        "mamá soltera",
+        "papá soltero",
+        "madre soltera",
+        "padre soltero",
+        "sin apoyo",
+        "no tengo con quien"
+      ],
+      "respuestas": [
+        "Criar sin apoyo es de lo más pesado que hay, y tiene sentido que te sientas así. No es falta de capacidad: es demasiada carga para una sola persona.",
+        "Gracias por decirlo. Sentirse sola o solo en la crianza es muy común, aunque casi nadie lo diga en voz alta."
+      ],
+      "mas": [
+        "Piensa en una red pequeña: una vecina, una mamá o papá de la escuela, un familiar. Intercambiar favores (yo recojo hoy, tú el jueves) alivia mucho.",
+        "Muchos DIF municipales y centros comunitarios tienen grupos de apoyo para madres y padres. Puede ser un buen lugar para conocer a otras personas en tu situación.",
+        "Dentro de Treselefantes puedes seguir registrando tu bitácora; así puedo ver cuándo estás más cargada/o y sugerirte cosas a tiempo."
+      ],
+      "pregunta": "¿Quieres ideas para armar una red de apoyo?",
+      "botones": [
+        "Me siento estresada/o",
+        "Ideas para tiempo para mí"
+      ]
+    },
+    {
+      "id": "ruido",
+      "nombre": "Ruido",
+      "tipo": "tema",
+      "palabras": [
+        "ruido",
+        "escandalo",
+        "gritan",
+        "gritos",
+        "no aguanto el ruido",
+        "mucho ruido",
+        "hacen ruido",
+        "bulla"
+      ],
+      "respuestas": [
+        "El ruido constante desgasta mucho, sobre todo cuando ya vienes cansada/o. Una idea: acuerden un «rato de silencio» diario (aunque sean 15 minutos) con actividades tranquilas como colorear o leer."
+      ],
+      "mas": [
+        "Unos tapones o audífonos con cancelación de ruido a volumen bajo te dejan escuchar a los niños pero bajan el ruido de fondo.",
+        "Convierte el volumen en juego: «voz de ratón» y «voz de león», y pide voz de ratón en ciertos momentos de la casa."
+      ],
+      "pregunta": "¿Te doy otra idea para manejar el ruido en casa?",
+      "botones": [
+        "Me siento estresada/o",
+        "Berrinches"
       ]
     },
     {
       "id": "sueno",
       "nombre": "Sueño",
+      "tipo": "tema",
       "palabras": [
         "dormir",
         "duerme",
@@ -50,13 +360,31 @@
         "insomnio",
         "despierta en la noche",
         "se despierta",
-        "desvela*"
+        "desvela*",
+        "no duerme",
+        "se duerme tarde",
+        "no quiere dormir",
+        "pesadilla*",
+        "acostarse",
+        "hora de dormir"
       ],
       "por_edad": {
-        "0-5": "A los {edad} años, una rutina corta y siempre igual ayuda mucho: baño, cuento y luz baja a la misma hora. Evita pantallas una hora antes de dormir.",
-        "6-11": "A los {edad} años conviene acordar juntos una hora fija de dormir y dejar las pantallas fuera del cuarto. Un rato de plática tranquila antes de apagar la luz ayuda a cerrar el día.",
-        "12-18": "En la adolescencia el reloj biológico se recorre y es normal que quieran dormir más tarde. Ayuda negociar una hora para dejar el celular fuera del cuarto en lugar de imponer la hora de dormir."
+        "0-5": [
+          "A los {edad} años, una rutina corta y siempre igual ayuda mucho: baño, cuento y luz baja a la misma hora. Evita pantallas una hora antes de dormir."
+        ],
+        "6-11": [
+          "A los {edad} años conviene acordar juntos una hora fija para dormir y dejar las pantallas fuera del cuarto. Un rato de plática tranquila antes de apagar la luz ayuda a cerrar el día."
+        ],
+        "12-18": [
+          "En la adolescencia el reloj biológico se recorre y es normal que quieran dormir más tarde. Funciona mejor negociar una hora para dejar el celular fuera del cuarto que imponer la hora de dormir."
+        ]
       },
+      "mas": [
+        "Si se despierta con miedo o pesadillas, acompaña con calma y pocas palabras, y regresa a la rutina. Hablar del sueño al día siguiente, con luz, ayuda más que en la noche.",
+        "Cuida también la mañana: despertar a la misma hora todos los días (incluso fines de semana) ordena el sueño más que acostarse temprano.",
+        "Si el problema de sueño dura semanas o afecta su ánimo en el día, vale la pena consultarlo con su pediatra."
+      ],
+      "pregunta": "¿Quieres otra idea para mejorar el sueño?",
       "botones": [
         "Pantallas y celular",
         "Me siento estresada/o"
@@ -65,31 +393,92 @@
     {
       "id": "berrinches",
       "nombre": "Berrinches y conducta",
+      "tipo": "tema",
       "palabras": [
         "berrinche*",
         "rabieta*",
-        "grita",
-        "gritos",
         "no obedece",
         "no me hace caso",
+        "no hace caso",
         "pataleta*",
         "se enoja",
-        "pelea*",
-        "se pelean"
+        "contesta mal",
+        "grosero",
+        "grosera",
+        "se porta mal",
+        "mal comportamiento",
+        "conducta",
+        "desobedece",
+        "retador",
+        "retadora",
+        "agresiv*",
+        "muerde",
+        "patea",
+        "avienta"
       ],
       "por_edad": {
-        "0-5": "A los {edad} años los berrinches son parte del desarrollo: todavía no sabe poner en palabras lo que siente. Mantén la calma, ponle nombre a la emoción («estás enojado porque…») y espera a que pase antes de hablar del límite.",
-        "6-11": "A los {edad} años ya puede entender reglas y consecuencias. Acuerden pocas reglas claras, y cuando haya pelea, separen y hablen después, con calma, de qué pasó y cómo repararlo.",
-        "12-18": "En la adolescencia el enojo suele esconder otras cosas: presión, cansancio o necesidad de autonomía. Evita discutir en caliente y busquen un momento tranquilo para escuchar primero."
+        "0-5": [
+          "A los {edad} años los berrinches son parte del desarrollo: todavía no sabe poner en palabras lo que siente. Mantén la calma, ponle nombre a la emoción («estás enojado porque…») y espera a que pase antes de hablar del límite."
+        ],
+        "6-11": [
+          "A los {edad} años ya entiende reglas y consecuencias. Acuerden pocas reglas claras y, cuando haya conflicto, hablen después, con calma, de qué pasó y cómo repararlo."
+        ],
+        "12-18": [
+          "En la adolescencia el enojo suele esconder otras cosas: presión, cansancio o necesidad de autonomía. Evita discutir en caliente y busquen un momento tranquilo para escuchar primero."
+        ]
       },
+      "mas": [
+        "Anticipa los momentos difíciles: avisar «en 5 minutos nos vamos» reduce muchos berrinches por transiciones.",
+        "Refuerza lo que sí quieres ver: «me gustó cómo esperaste tu turno». La atención positiva cambia más la conducta que el regaño.",
+        "Si la conducta incluye golpes, mordidas o se pone en riesgo, primero detén con firmeza y calma («no te dejo pegar») y después habla de la emoción.",
+        "Si los berrinches son muy intensos, muy frecuentes o no bajan con la edad, una valoración con un psicólogo infantil puede orientarte."
+      ],
+      "pregunta": "¿Quieres otra estrategia?",
       "botones": [
-        "Me siento estresada/o",
-        "Hablar con mi hijo/a"
+        "Pierdo la paciencia",
+        "Límites y reglas"
+      ]
+    },
+    {
+      "id": "limites",
+      "nombre": "Límites y reglas",
+      "tipo": "tema",
+      "palabras": [
+        "limite*",
+        "reglas",
+        "castigo*",
+        "disciplina",
+        "consecuencia*",
+        "premios",
+        "nalgada*",
+        "poner orden",
+        "autoridad"
+      ],
+      "por_edad": {
+        "0-5": [
+          "A esta edad funcionan pocas reglas, muy concretas y repetidas con paciencia («en la mesa comemos sentados»). Las consecuencias deben ser inmediatas y relacionadas con lo que pasó."
+        ],
+        "6-11": [
+          "Hagan juntos una lista corta de reglas de la casa y péguenla a la vista. Si se rompe una, la consecuencia debe ser lógica (si no recoge, no hay juego hasta recoger)."
+        ],
+        "12-18": [
+          "Con adolescentes funciona negociar: acuerden reglas y consecuencias juntos y respétenlas los dos. Explica el porqué de cada límite; sienten más respeto cuando se les toma en cuenta."
+        ]
+      },
+      "mas": [
+        "Evita castigos físicos: enseñan miedo, no autocontrol, y la evidencia muestra que empeoran la conducta a mediano plazo.",
+        "Ser consistentes entre adultos (mamá, papá, abuelos) es clave. Si cada quien pone reglas distintas, los niños se confunden."
+      ],
+      "pregunta": "¿Te comparto otra idea sobre límites?",
+      "botones": [
+        "Berrinches",
+        "Pierdo la paciencia"
       ]
     },
     {
       "id": "pantallas",
       "nombre": "Pantallas y celular",
+      "tipo": "tema",
       "palabras": [
         "celular",
         "pantalla*",
@@ -97,14 +486,33 @@
         "videojuego*",
         "redes sociales",
         "tiktok",
+        "instagram",
+        "youtube",
         "internet",
-        "telefono"
+        "telefono",
+        "juegos en linea",
+        "roblox",
+        "fortnite",
+        "la tele",
+        "television"
       ],
       "por_edad": {
-        "0-5": "Antes de los 5 años se recomienda que las pantallas sean pocas y acompañadas. Elige contenido corto y velo junto con {hijo} para platicarlo.",
-        "6-11": "A los {edad} años funciona tener horarios claros de pantalla y que los dispositivos se usen en espacios comunes de la casa.",
-        "12-18": "Con adolescentes funciona mejor acordar que imponer: horarios sin celular (comidas, antes de dormir) que también cumplan los adultos. Pregunta qué ve y con quién habla, sin interrogatorio."
+        "0-5": [
+          "Antes de los 5 años se recomienda que las pantallas sean pocas y acompañadas. Elige contenido corto y velo junto con {hijo} para platicarlo."
+        ],
+        "6-11": [
+          "A los {edad} años funciona tener horarios claros de pantalla y que los dispositivos se usen en espacios comunes de la casa."
+        ],
+        "12-18": [
+          "Con adolescentes funciona más acordar que imponer: horarios sin celular (comidas, antes de dormir) que también cumplan los adultos. Pregunta qué ve y con quién habla, sin interrogatorio."
+        ]
       },
+      "mas": [
+        "Activa el control parental del dispositivo y revisen juntos qué apps usa; explícale que es para cuidarle, no para espiarle.",
+        "Ofrece alternativas atractivas: no basta con quitar la pantalla, hay que tener a la mano algo que hacer juntos.",
+        "Habla de seguridad en línea: no compartir fotos, ubicación ni datos con desconocidos, y avisarte si alguien le hace sentir incómodo/a."
+      ],
+      "pregunta": "¿Quieres otra idea sobre pantallas?",
       "botones": [
         "Problemas para dormir",
         "Hablar con mi hijo/a"
@@ -113,32 +521,49 @@
     {
       "id": "comunicacion",
       "nombre": "Comunicación con hijos",
+      "tipo": "tema",
       "palabras": [
         "no me habla",
         "no me cuenta",
         "hablar con mi hij*",
+        "hablo con mi hij*",
+        "como hablo",
+        "como le hablo",
+        "hablar con",
         "comunicacion",
         "se encierra",
         "distante",
         "no quiere hablar",
-        "hablo con mi hij*",
-        "como hablo",
-        "como le hablo",
-        "hablar con"
+        "no me escucha",
+        "como platico",
+        "platicar"
       ],
       "por_edad": {
-        "0-5": "A esta edad la comunicación pasa mucho por el juego. Diez minutos diarios de juego libre, dejando que {hijo} dirija, fortalecen mucho el vínculo.",
-        "6-11": "Pregunta cosas concretas en lugar de «¿cómo te fue?»: «¿qué fue lo más divertido de hoy?». Los trayectos en coche o caminando son buenos momentos para platicar.",
-        "12-18": "Es normal que a los {edad} años busquen más privacidad. Mantén espacios sin presión, como cocinar o manejar juntos, y escucha sin dar sermón; eso abre la puerta a que te cuenten más."
+        "0-5": [
+          "A esta edad la comunicación pasa mucho por el juego. Diez minutos diarios de juego libre, dejando que {hijo} dirija, fortalecen mucho el vínculo."
+        ],
+        "6-11": [
+          "Pregunta cosas concretas en lugar de «¿cómo te fue?»: «¿qué fue lo más divertido de hoy?». Los trayectos en coche o caminando son buenos momentos para platicar."
+        ],
+        "12-18": [
+          "Es normal que a los {edad} años busquen más privacidad. Mantén espacios sin presión, como cocinar o manejar juntos, y escucha sin dar sermón; eso abre la puerta a que te cuenten más."
+        ]
       },
+      "mas": [
+        "Valida antes de aconsejar: «entiendo que eso te hizo sentir mal» abre más la conversación que «deberías…».",
+        "Comparte tú también algo de tu día; la conversación fluye mejor cuando no se siente como interrogatorio.",
+        "Si notas un cambio fuerte (se aísla mucho, deja de comer, baja mucho en la escuela), vale la pena buscar orientación profesional."
+      ],
+      "pregunta": "¿Quieres otra idea para acercarte?",
       "botones": [
         "Pantallas y celular",
-        "Me siento estresada/o"
+        "Escuela y tareas"
       ]
     },
     {
       "id": "escuela",
       "nombre": "Escuela y tareas",
+      "tipo": "tema",
       "palabras": [
         "tarea*",
         "escuela",
@@ -146,21 +571,73 @@
         "examen*",
         "maestr*",
         "reprob*",
-        "estudiar"
+        "estudiar",
+        "estudia",
+        "boleta",
+        "colegio",
+        "primaria",
+        "secundaria",
+        "prepa",
+        "kinder",
+        "no quiere ir a la escuela"
       ],
       "por_edad": {
-        "0-5": "En preescolar lo más importante es el juego y la curiosidad. Leer juntos un cuento al día ayuda más que cualquier tarea.",
-        "6-11": "Un lugar fijo y una hora fija para la tarea ayudan mucho. Acompaña sin hacerla por {hijo}, y divide las tareas largas en partes cortas.",
-        "12-18": "En secundaria y prepa ayuda que organicen su propia agenda. Pregunta cómo puedes apoyar en lugar de revisar todo; si las calificaciones bajan de golpe, vale la pena platicar qué más está pasando."
+        "0-5": [
+          "En preescolar lo más importante es el juego y la curiosidad. Leer juntos un cuento al día ayuda más que cualquier tarea."
+        ],
+        "6-11": [
+          "Un lugar fijo y una hora fija para la tarea ayudan mucho. Acompaña sin hacerla por {hijo}, y divide las tareas largas en partes cortas."
+        ],
+        "12-18": [
+          "En secundaria y prepa ayuda que organicen su propia agenda. Pregunta cómo puedes apoyar en lugar de revisar todo; si las calificaciones bajan de golpe, vale la pena platicar qué más está pasando."
+        ]
       },
+      "mas": [
+        "Habla con la maestra o el maestro: ellos ven cosas en el salón que en casa no vemos, y juntos pueden armar un plan.",
+        "Si no quiere ir a la escuela, pregunta con calma qué pasa ahí: a veces hay un conflicto con compañeros que no ha contado.",
+        "Celebra el esfuerzo, no solo la calificación: «vi lo mucho que estudiaste» motiva más que un 10."
+      ],
+      "pregunta": "¿Te doy otra idea sobre la escuela?",
+      "botones": [
+        "Acoso escolar",
+        "Hablar con mi hijo/a"
+      ]
+    },
+    {
+      "id": "acoso",
+      "nombre": "Acoso escolar",
+      "tipo": "tema",
+      "palabras": [
+        "bullying",
+        "bulling",
+        "acoso escolar",
+        "le hacen bullying",
+        "lo molestan",
+        "la molestan",
+        "se burlan",
+        "le pegan en la escuela",
+        "lo excluyen",
+        "la excluyen",
+        "ciberacoso"
+      ],
+      "respuestas": [
+        "Detectarlo a tiempo es muy importante. Si la niña o el niño te lo contó, escucha sin minimizar ni reaccionar con enojo, y dile que no es su culpa. Después anota qué pasó, cuándo y quién estuvo, y llévalo a la dirección para que activen el protocolo de la escuela."
+      ],
+      "mas": [
+        "Pide una reunión con la dirección y pregunta por el protocolo de convivencia escolar; en México todas las escuelas deben tener uno.",
+        "Si hay ciberacoso, guarda capturas de pantalla antes de bloquear o borrar nada.",
+        "Si notas que deja de comer, no quiere salir o habla de hacerse daño, busca ayuda profesional de inmediato."
+      ],
+      "pregunta": "¿Quieres que te comparta los siguientes pasos con la escuela?",
       "botones": [
         "Hablar con mi hijo/a",
-        "Me siento estresada/o"
+        "Quiero hablar con un especialista"
       ]
     },
     {
       "id": "grupo",
       "nombre": "Manejo de grupo (docentes)",
+      "tipo": "tema",
       "palabras": [
         "grupo",
         "alumn*",
@@ -168,46 +645,371 @@
         "clase",
         "estudiantes",
         "conflicto en el grupo",
-        "bullying",
-        "acoso escolar"
+        "indisciplina",
+        "padres de familia",
+        "junta"
       ],
       "por_edad": {
-        "0-5": "Con grupos pequeños, las rutinas visuales y los cambios anunciados con tiempo reducen mucho los conflictos.",
-        "6-11": "Acuerdos de grupo escritos entre todos y revisados cada semana funcionan bien a esta edad.",
-        "12-18": "Con adolescentes ayuda dar voz al grupo: asambleas cortas para acordar reglas y espacios para hablar de lo que les preocupa. Si hay acoso escolar, documenta lo que observas y sigue el protocolo de tu escuela."
+        "0-5": [
+          "Con grupos pequeños, las rutinas visuales y los cambios anunciados con tiempo reducen mucho los conflictos."
+        ],
+        "6-11": [
+          "Los acuerdos de grupo escritos entre todos y revisados cada semana funcionan bien a esta edad."
+        ],
+        "12-18": [
+          "Con adolescentes ayuda darle voz al grupo: asambleas cortas para acordar reglas y espacios para hablar de lo que les preocupa. Si hay acoso escolar, documenta lo que observas y sigue el protocolo de tu escuela."
+        ]
       },
+      "mas": [
+        "Identifica a los líderes naturales del grupo y dales responsabilidades; trabajar con ellos es más eficaz que pelear contra ellos.",
+        "Dedica los primeros 5 minutos a un «termómetro emocional» (¿cómo llegan hoy?). Baja la tensión y te da información valiosa.",
+        "Mantén comunicación breve y frecuente con las familias, no solo cuando hay problemas."
+      ],
+      "pregunta": "¿Quieres otra estrategia para el grupo?",
       "botones": [
-        "Me siento estresada/o",
-        "Ver mi Rueda de la Vida"
+        "Acoso escolar",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "alimentacion",
+      "nombre": "Alimentación",
+      "tipo": "tema",
+      "palabras": [
+        "no come",
+        "comer",
+        "comida",
+        "come mal",
+        "verdura*",
+        "dulces",
+        "alimentacion",
+        "desayun*",
+        "lunch",
+        "no quiere comer",
+        "quisquillos*",
+        "refresco*"
+      ],
+      "por_edad": {
+        "0-5": [
+          "A esta edad es normal que rechacen comidas nuevas; a veces necesitan probar algo 10 o 15 veces para aceptarlo. Ofrece sin forzar y come tú lo mismo en la mesa."
+        ],
+        "6-11": [
+          "Invita a {hijo} a cocinar o elegir una verdura en el mercado; lo que preparan, lo comen con más ganas."
+        ],
+        "12-18": [
+          "En la adolescencia comen distinto y a deshoras. Mantén al menos una comida en familia sin pantallas y evita comentarios sobre su cuerpo o su peso."
+        ]
+      },
+      "mas": [
+        "Evita usar la comida como premio o castigo; genera una relación difícil con ella.",
+        "Si notas cambios fuertes de peso, que esconde comida o se salta comidas a propósito, consulta con su pediatra."
+      ],
+      "pregunta": "¿Te comparto otra idea sobre la comida?",
+      "botones": [
+        "Límites y reglas",
+        "Problemas para dormir"
+      ]
+    },
+    {
+      "id": "miedos",
+      "nombre": "Miedos y ansiedad del niño",
+      "tipo": "tema",
+      "palabras": [
+        "miedo*",
+        "asustad*",
+        "temor*",
+        "le da miedo",
+        "nervios",
+        "preocupad*",
+        "se preocupa",
+        "fobia",
+        "angustia"
+      ],
+      "por_edad": {
+        "0-5": [
+          "Los miedos (a la oscuridad, a los monstruos) son normales a esta edad. No los ridiculices: valida («entiendo que te da miedo») y acompaña, por ejemplo con una lamparita."
+        ],
+        "6-11": [
+          "A esta edad aparecen miedos más reales (a que algo malo pase, a la escuela). Ayuda hablarlos con calma y enfrentarlos poco a poco, sin forzar."
+        ],
+        "12-18": [
+          "En adolescentes la ansiedad suele aparecer por la escuela, los amigos o el futuro. Escucha sin minimizar y ayúdale a separar lo que puede controlar de lo que no."
+        ]
+      },
+      "mas": [
+        "Enseña una respiración sencilla: inhalar oliendo una flor, exhalar soplando una vela. Practíquenla en momentos tranquilos para usarla en los difíciles.",
+        "Si el miedo le impide hacer cosas cotidianas (ir a la escuela, dormir, separarse de ti) por varias semanas, es buena idea consultar con un psicólogo infantil."
+      ],
+      "pregunta": "¿Quieres otra idea para acompañar sus miedos?",
+      "botones": [
+        "Problemas para dormir",
+        "Hablar con mi hijo/a"
+      ]
+    },
+    {
+      "id": "hermanos",
+      "nombre": "Hermanos",
+      "tipo": "tema",
+      "palabras": [
+        "hermano*",
+        "hermana*",
+        "celos",
+        "celoso",
+        "celosa",
+        "se pelean",
+        "peleas entre",
+        "bebe nuevo",
+        "nuevo bebe"
+      ],
+      "respuestas": [
+        "Las peleas entre hermanos son normales, y también son una oportunidad para aprender a negociar. Evita hacer de juez todo el tiempo: describe lo que ves («veo dos niños que quieren el mismo juguete») y pregúntales cómo lo pueden resolver."
+      ],
+      "mas": [
+        "Dale a cada hijo un rato a solas contigo, aunque sean 10 minutos a la semana. Baja mucho los celos.",
+        "Evita las comparaciones («tu hermana sí…»); cada uno necesita sentirse visto por quien es."
+      ],
+      "pregunta": "¿Te doy otra idea para las peleas entre hermanos?",
+      "botones": [
+        "Berrinches",
+        "Pierdo la paciencia"
+      ]
+    },
+    {
+      "id": "separacion",
+      "nombre": "Separación o divorcio",
+      "tipo": "tema",
+      "palabras": [
+        "divorcio",
+        "divorciad*",
+        "separacion",
+        "separad*",
+        "nos separamos",
+        "su papa no esta",
+        "su mama no esta",
+        "custodia",
+        "visitas",
+        "papa ausente",
+        "mama ausente"
+      ],
+      "respuestas": [
+        "Una separación mueve a toda la familia. Lo que más protege a los niños es saber que no es su culpa, que los dos los siguen queriendo y tener rutinas predecibles en ambas casas."
+      ],
+      "mas": [
+        "Evita hablar mal del otro padre o madre frente a los niños, y no les pidas que lleven mensajes; los pone en medio del conflicto.",
+        "Avisa con tiempo los cambios (mudanzas, días de visita) y explícalos con palabras sencillas según su edad."
+      ],
+      "pregunta": "¿Quieres otra recomendación para este proceso?",
+      "botones": [
+        "Hablar con mi hijo/a",
+        "Quiero hablar con un especialista"
+      ]
+    },
+    {
+      "id": "duelo",
+      "nombre": "Duelo",
+      "tipo": "tema",
+      "palabras": [
+        "murio",
+        "fallecio",
+        "falleci*",
+        "se murio",
+        "perdimos a",
+        "duelo",
+        "funeral",
+        "velorio",
+        "perdida de",
+        "extrana a su"
+      ],
+      "respuestas": [
+        "Lo siento mucho. El duelo en los niños se ve distinto según la edad: a veces juegan como si nada y de pronto preguntan lo mismo muchas veces. Usa palabras claras («murió», no «se durmió») y dales permiso de estar tristes."
+      ],
+      "mas": [
+        "Hagan algo juntos para recordar: una caja de recuerdos, un dibujo, una foto. Ayuda a procesar la pérdida.",
+        "Cuida también tu propio duelo; está bien que te vean triste y que les expliques por qué."
+      ],
+      "pregunta": "¿Quieres otra idea para acompañarle en el duelo?",
+      "botones": [
+        "Quiero hablar con un especialista",
+        "Me siento triste"
+      ]
+    },
+    {
+      "id": "desarrollo",
+      "nombre": "Desarrollo",
+      "tipo": "tema",
+      "palabras": [
+        "no habla",
+        "habla poco",
+        "lenguaje",
+        "caminar",
+        "no camina",
+        "pañal",
+        "control de esfinteres",
+        "desarrollo",
+        "retraso",
+        "esta atrasad*",
+        "es normal que",
+        "tartamudea",
+        "aprender a leer"
+      ],
+      "por_edad": {
+        "0-5": [
+          "Cada niño tiene su ritmo, pero hay señales para consultar: si a los 2 años no dice palabras sueltas o a los 3 no arma frases cortas, coméntalo con su pediatra. Mientras tanto, háblale mucho, nombra lo que hacen y lean juntos."
+        ],
+        "6-11": [
+          "A esta edad lo importante es la lectura, la escritura y la convivencia. Si notas que se le dificulta mucho más que a otros niños, la escuela puede sugerir una valoración."
+        ],
+        "12-18": [
+          "En la adolescencia el cuerpo cambia rápido y a ritmos distintos. Si tienes dudas sobre su desarrollo, su pediatra es el mejor punto de partida."
+        ]
+      },
+      "mas": [
+        "Lleva sus revisiones de niño sano al día; ahí el pediatra evalúa el desarrollo y puede detectar algo a tiempo."
+      ],
+      "pregunta": "¿Te comparto algo más sobre su desarrollo?",
+      "botones": [
+        "Quiero hablar con un especialista",
+        "Escuela y tareas"
+      ]
+    },
+    {
+      "id": "sexualidad",
+      "nombre": "Cuerpo y sexualidad",
+      "tipo": "tema",
+      "palabras": [
+        "sexualidad",
+        "sexo",
+        "cuerpo",
+        "partes intimas",
+        "pubertad",
+        "menstruacion",
+        "regla",
+        "novio",
+        "novia",
+        "de donde vienen los bebes",
+        "enamorad*"
+      ],
+      "por_edad": {
+        "0-5": [
+          "Desde pequeños es importante usar los nombres correctos de las partes del cuerpo y enseñar que nadie debe tocar sus partes privadas ni pedirles secretos sobre su cuerpo."
+        ],
+        "6-11": [
+          "Responde sus preguntas con calma y con la verdad, en palabras sencillas. Si tú no te pones nerviosa/o, entienden que pueden preguntarte lo que sea."
+        ],
+        "12-18": [
+          "Con adolescentes, mejor varias conversaciones cortas que «la plática». Hablen de consentimiento, cuidado y respeto, y diles que pueden acudir a ti sin ser juzgados."
+        ]
+      },
+      "mas": [
+        "Enséñales la regla de «secretos no, sorpresas sí»: si alguien les pide guardar un secreto sobre su cuerpo, deben contarlo a un adulto de confianza."
+      ],
+      "pregunta": "¿Quieres otra idea para hablar de estos temas?",
+      "botones": [
+        "Hablar con mi hijo/a",
+        "Límites y reglas"
+      ]
+    },
+    {
+      "id": "pareja",
+      "nombre": "Pareja",
+      "tipo": "tema",
+      "palabras": [
+        "pareja",
+        "esposo",
+        "esposa",
+        "marido",
+        "mi mujer",
+        "discutimos",
+        "peleamos",
+        "no me apoya",
+        "no ayuda en casa",
+        "relacion"
+      ],
+      "respuestas": [
+        "La crianza pone a prueba a cualquier pareja. Una idea: escojan un momento tranquilo (no en medio de la pelea) para hablar de cómo repartir tareas, con una lista concreta de quién hace qué."
+      ],
+      "mas": [
+        "Busquen aunque sea un rato a la semana como pareja, sin hablar de los niños. Fortalece al equipo.",
+        "Si los conflictos son constantes o hay gritos frente a los niños, una terapia de pareja puede ayudar mucho."
+      ],
+      "pregunta": "¿Quieres otra idea sobre la pareja?",
+      "botones": [
+        "Nadie me ayuda",
+        "Me siento estresada/o"
       ]
     },
     {
       "id": "tiempo_para_mi",
       "nombre": "Autocuidado",
+      "tipo": "tema",
       "palabras": [
         "tiempo para mi",
         "autocuidado",
         "ideas para tiempo",
         "descansar",
+        "descanso",
         "relajar*",
-        "para mi"
+        "para mi",
+        "hobby",
+        "cuidarme"
       ],
-      "respuesta": "Algunas ideas de 10 a 15 minutos: caminar sin el celular, tomar un café sentada/o sin hacer nada más, llamar a una amiga o amigo, o escuchar una canción que te guste. No tiene que ser mucho; lo importante es que sea seguido.",
+      "respuestas": [
+        "Algunas ideas de 10 a 15 minutos: caminar sin el celular, tomar un café sentada/o sin hacer nada más, llamar a una amiga o amigo, o escuchar una canción que te guste. No tiene que ser mucho; lo importante es que sea seguido."
+      ],
+      "mas": [
+        "Agéndalo como una cita: si está en el calendario, es más difícil que se pierda.",
+        "Pide relevos concretos: «¿te quedas con los niños el sábado de 10 a 11?» funciona mejor que «necesito ayuda».",
+        "Anota en tu bitácora los días que lo logras; verás cómo cambia tu energía."
+      ],
+      "pregunta": "¿Te doy más ideas de autocuidado?",
       "botones": [
         "¿Cómo lleno mi bitácora?",
         "Ver mi Rueda de la Vida"
       ]
     },
     {
+      "id": "especialista",
+      "nombre": "Buscar un especialista",
+      "tipo": "tema",
+      "palabras": [
+        "psicolog*",
+        "terapia",
+        "terapeuta",
+        "especialista",
+        "profesional",
+        "psiquiatra",
+        "doctor",
+        "pediatra",
+        "necesito ayuda profesional",
+        "quiero hablar con alguien"
+      ],
+      "respuestas": [
+        "Buscar a un profesional es una gran decisión. En Treselefantes podemos orientarte: si tu caso necesita atención, te canalizamos con un especialista por caso. Si es urgente, llama al 911 o a la Línea de la Vida (800 911 2000)."
+      ],
+      "mas": [
+        "Mientras consigues cita, te puede ayudar anotar en tu bitácora lo que observas (cuándo pasa, qué lo detona). Esa información le sirve mucho al especialista.",
+        "Opciones de bajo costo: centros de salud, DIF municipal y clínicas de psicología de universidades."
+      ],
+      "pregunta": "¿Quieres que te diga qué información llevar a la cita?",
+      "botones": [
+        "¿Cómo lleno mi bitácora?",
+        "Me siento estresada/o"
+      ]
+    },
+    {
       "id": "ayuda_bitacora",
       "nombre": "Ayuda: bitácora",
+      "tipo": "tema",
       "palabras": [
         "bitacora",
         "registrar mi dia",
         "llenar",
-        "registro diario"
+        "registro diario",
+        "como lleno"
       ],
-      "respuesta": "La bitácora es tu registro diario. Cada día anotas tu nivel de energía y de estrés del 1 al 5 y, si quieres, qué te detonó (ruido, prisas, cansancio…). Con eso puedo darte un seguimiento más personal. Toma menos de un minuto.",
+      "respuestas": [
+        "La bitácora es tu registro diario: anotas tu energía y tu estrés del 1 al 5 y, si quieres, qué te detonó (ruido, prisas, cansancio…). Con eso puedo darte un seguimiento más personal. Toma menos de un minuto."
+      ],
       "botones": [
         "Ver mi Rueda de la Vida",
         "¿Qué es el Oráculo?"
@@ -216,13 +1018,16 @@
     {
       "id": "ayuda_rueda",
       "nombre": "Ayuda: Rueda de la Vida",
+      "tipo": "tema",
       "palabras": [
         "rueda de la vida",
         "rueda",
         "mis areas",
         "ver mi rueda"
       ],
-      "respuesta": "La Rueda de la Vida califica del 1 al 10 ocho áreas: salud, emociones, pareja, familia, trabajo, finanzas, vida social y tiempo para ti. Tu área más baja ahora es «{area_baja}». Puedes verla en el panel de tu perfil.",
+      "respuestas": [
+        "La Rueda de la Vida califica del 1 al 10 ocho áreas: salud, emociones, pareja, familia, trabajo, finanzas, vida social y tiempo para ti. Tu área más baja ahora es «{area_baja}». Puedes verla en el panel de tu perfil."
+      ],
       "botones": [
         "Ideas para tiempo para mí",
         "¿Cómo lleno mi bitácora?"
@@ -231,14 +1036,19 @@
     {
       "id": "ayuda_oraculo",
       "nombre": "Ayuda: Oráculo",
+      "tipo": "tema",
       "palabras": [
         "oraculo",
         "asistente",
         "que haces",
         "quien eres",
-        "como funcionas"
+        "como funcionas",
+        "eres un robot",
+        "eres real"
       ],
-      "respuesta": "Soy el acompañante de Treselefantes. Te ayudo con dudas de crianza según la edad de tus hijos y tu propia etapa, y uso tu bitácora y tu Rueda de la Vida para personalizar lo que te digo. Te oriento, pero no sustituyo a un profesional.",
+      "respuestas": [
+        "Soy el acompañante de Treselefantes. Te ayudo con dudas de crianza según la edad de tus hijos y tu propia etapa, y uso tu bitácora y tu Rueda de la Vida para personalizar lo que te digo. Te oriento, pero no sustituyo a un profesional."
+      ],
       "botones": [
         "Me siento estresada/o",
         "¿Cómo lleno mi bitácora?"
@@ -247,25 +1057,58 @@
     {
       "id": "gracias",
       "nombre": "Agradecimiento / despedida",
+      "tipo": "tema",
       "palabras": [
         "gracias",
+        "muchas gracias",
         "adios",
         "hasta luego",
         "bye",
-        "nos vemos"
+        "nos vemos",
+        "me ayudaste",
+        "me sirvio"
       ],
-      "respuesta": "Con gusto, {nombre}. Aquí estaré cuando lo necesites. Si puedes, llena hoy tu bitácora.",
+      "respuestas": [
+        "Con gusto, {nombre}. Aquí estaré cuando lo necesites. Si puedes, llena hoy tu bitácora.",
+        "Me da gusto acompañarte. Cuídate mucho, {nombre}."
+      ],
       "botones": []
     }
   ],
+  "emociones": {
+    "_nota": "Si no se reconoce un tema pero hay una emoción, el bot la refleja y pregunta más.",
+    "palabras": {
+      "triste*": "tristeza",
+      "preocupad*": "preocupación",
+      "miedo": "miedo",
+      "frustrad*": "frustración",
+      "confundid*": "confusión",
+      "enojad*": "enojo",
+      "cansad*": "cansancio",
+      "agobiad*": "agobio",
+      "decepcionad*": "decepción",
+      "insegur*": "inseguridad",
+      "mal": "malestar",
+      "fatal": "malestar",
+      "horrible": "malestar"
+    },
+    "respuesta": "Escucho que hay {emocion} en lo que me cuentas. ¿Tiene que ver más contigo, con tus hijos o con algo de la escuela o el trabajo?"
+  },
   "por_defecto": {
-    "respuesta": "No estoy segura de haberte entendido. Todavía estoy aprendiendo. ¿Me ayudas eligiendo uno de estos temas?",
+    "respuestas": [
+      "Cuéntame un poco más para entenderte mejor: ¿esto tiene que ver contigo, con tus hijos o con la escuela?",
+      "Quiero ayudarte bien. ¿Me lo platicas con otras palabras, o eliges uno de estos temas?",
+      "Todavía no tengo información sobre eso, pero puedo acompañarte en estos temas:"
+    ],
     "botones": [
       "Me siento estresada/o",
-      "Problemas para dormir",
       "Berrinches",
+      "Problemas para dormir",
       "Pantallas y celular",
-      "Escuela y tareas"
+      "Escuela y tareas",
+      "Quiero hablar con un especialista"
     ]
-  }
+  },
+  "respuesta_negacion": "Está bien, {nombre}. ¿Hay algo más en lo que te pueda acompañar?",
+  "sin_mas_ideas": "Esas son las ideas que tengo sobre este tema por ahora. Si sientes que necesitas más apoyo, puedo orientarte para hablar con un especialista. ¿Quieres ver otros temas?"
 }

@@ -10,10 +10,12 @@ El chatbot usa el historial de cada persona (bitácora y Rueda de la Vida) para 
 
 1. La persona elige un perfil de prueba.
 2. Se carga su historial y el bot la saluda con contexto. Si lleva más de 3 días sin entrar, la invita a llenar su bitácora.
-3. Cada mensaje se normaliza (minúsculas, sin acentos) y pasa por este orden:
-   1. **Código Rojo** → si se activa, muestra el protocolo de urgencia (911, Línea de la Vida) y el botón de revisión humana.
-   2. **Intención** → detecta el tema por palabras clave y responde según la edad del niño o del grupo.
-   3. **Cruce cuidador–niño** → si aplica, agrega una sugerencia para la etapa del cuidador.
+3. Cada mensaje se normaliza (minúsculas, sin acentos, sin letras repetidas, abreviaturas como «q» o «xq») y pasa por este orden:
+   1. **Código Rojo** → en cualquier punto de la conversación. Si se activa, muestra el protocolo de urgencia (911, Línea de la Vida), el botón de revisión humana, y la barra de emergencia del chat se queda resaltada.
+   2. **Tema nuevo** → detecta el tema por palabras clave (tolera errores de dedo) y responde según la edad del niño o del grupo. Las respuestas rotan para no repetirse.
+   3. **Contexto** → si la persona dice «sí», «¿qué más?», «otra idea» o «no funcionó», el bot continúa con el último tema y da la siguiente idea.
+   4. **Emoción** → si no hay tema pero hay una emoción («me siento fatal»), la refleja y pregunta más.
+   5. **Cruce cuidador–niño** → si aplica, agrega una sugerencia para la etapa del cuidador (una vez por conversación).
 4. Cada interacción se guarda en el navegador y se puede descargar en CSV para los tableros.
 
 ## Estructura
@@ -34,7 +36,9 @@ El chatbot usa el historial de cada persona (bitácora y Rueda de la Vida) para 
 Todo el contenido está en los cuatro archivos `.json`. Se puede editar directo en GitHub (botón del lápiz):
 
 - **Agregar una palabra clave:** súmala a la lista `palabras` de la intención. Escríbela en minúsculas y sin acentos. Un `*` al final acepta cualquier terminación (`cansad*` detecta *cansada* y *cansado*).
-- **Cambiar una respuesta:** edita `respuesta` o el texto de `por_edad` (`0-5`, `6-11`, `12-18`). Puedes usar `{nombre}`, `{hijo}`, `{edad}` y `{area_baja}`.
+- **Cambiar una respuesta:** edita la lista `respuestas` o las de `por_edad` (`0-5`, `6-11`, `12-18`). Puedes usar `{nombre}`, `{hijo}`, `{edad}` y `{area_baja}`.
+- **Agregar ideas de seguimiento:** súmalas a la lista `mas` del tema; se muestran cuando la persona pide más o dice que algo no funcionó.
+- **Agregar un tema nuevo:** copia un tema completo de `intenciones.json` y cambia su `id`, `palabras` y respuestas.
 - **Agregar una regla de cruce:** copia una regla de `cruces.json` y cambia etapas, edades y textos.
 - **Agregar una palabra de alerta:** súmala a la categoría correspondiente de `codigo_rojo.json` y vuelve a correr los casos de `PRUEBAS_CODIGO_ROJO.md`.
 
