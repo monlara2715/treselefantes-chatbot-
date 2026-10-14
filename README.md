@@ -6,9 +6,18 @@ El chatbot usa el historial de cada persona (bitácora y Rueda de la Vida) para 
 
 > ⚠️ Prototipo con **datos 100% inventados**. Funciona con reglas y palabras clave, sin inteligencia artificial ni claves de API. Orienta, pero no sustituye a un profesional.
 
+## Novedades de la versión 3
+
+- **Crear un perfil desde cero** en 3 pasos: datos y etapa del cuidador (con consentimiento), hijos o grupo, y Rueda de la Vida.
+- **Llenado individual:** cada persona llena su bitácora del día (energía, estrés, detonantes y nota) y actualiza su Rueda de la Vida desde el panel o desde el chat. El acompañante comenta cada registro.
+- **Editar o borrar el perfil y todos sus datos** (derecho de cancelación, LFPDPPP).
+- **Fuentes en cada recomendación:** bajo cada respuesta aparece «Para saber más» con guías de UNICEF, la Academia Americana de Pediatría, Mayo Clinic, CDC y NIH, y búsquedas de videos de relajación en YouTube.
+
+> En este prototipo los perfiles creados se guardan solo en el navegador de quien los crea. La versión real los guardaría en el servidor de Treselefantes.
+
 ## Cómo funciona
 
-1. La persona elige un perfil de prueba.
+1. La persona crea su perfil o elige uno de ejemplo.
 2. Se carga su historial y el bot la saluda con contexto. Si lleva más de 3 días sin entrar, la invita a llenar su bitácora.
 3. Cada mensaje se normaliza (minúsculas, sin acentos, sin letras repetidas, abreviaturas como «q» o «xq») y pasa por este orden:
    1. **Código Rojo** → en cualquier punto de la conversación. Si se activa, muestra el protocolo de urgencia (911, Línea de la Vida), el botón de revisión humana, y la barra de emergencia del chat se queda resaltada.
@@ -38,6 +47,7 @@ Todo el contenido está en los cuatro archivos `.json`. Se puede editar directo 
 - **Agregar una palabra clave:** súmala a la lista `palabras` de la intención. Escríbela en minúsculas y sin acentos. Un `*` al final acepta cualquier terminación (`cansad*` detecta *cansada* y *cansado*).
 - **Cambiar una respuesta:** edita la lista `respuestas` o las de `por_edad` (`0-5`, `6-11`, `12-18`). Puedes usar `{nombre}`, `{hijo}`, `{edad}` y `{area_baja}`.
 - **Agregar ideas de seguimiento:** súmalas a la lista `mas` del tema; se muestran cuando la persona pide más o dice que algo no funcionó.
+- **Agregar o cambiar fuentes:** las ligas están en el catálogo `fuentes` al final de `intenciones.json`; cada tema lista los ids de sus fuentes en `fuentes`. Las reglas de `cruces.json` también tienen `fuentes`.
 - **Agregar un tema nuevo:** copia un tema completo de `intenciones.json` y cambia su `id`, `palabras` y respuestas.
 - **Agregar una regla de cruce:** copia una regla de `cruces.json` y cambia etapas, edades y textos.
 - **Agregar una palabra de alerta:** súmala a la categoría correspondiente de `codigo_rojo.json` y vuelve a correr los casos de `PRUEBAS_CODIGO_ROJO.md`.

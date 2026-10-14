@@ -179,6 +179,11 @@
         "Ideas para tiempo para mí",
         "Nadie me ayuda",
         "¿Cómo lleno mi bitácora?"
+      ],
+      "fuentes": [
+        "unicef_estres",
+        "mayo_relajacion",
+        "yt_respiracion"
       ]
     },
     {
@@ -213,6 +218,11 @@
       "botones": [
         "Quiero hablar con un especialista",
         "Ideas para tiempo para mí"
+      ],
+      "fuentes": [
+        "unicef_estres",
+        "odphp_cuidador",
+        "yt_meditacion"
       ]
     },
     {
@@ -247,6 +257,10 @@
       "botones": [
         "Pierdo la paciencia",
         "Me siento estresada/o"
+      ],
+      "fuentes": [
+        "unicef_crianza",
+        "unicef_estres"
       ]
     },
     {
@@ -282,6 +296,11 @@
       "botones": [
         "Me siento culpable",
         "Berrinches"
+      ],
+      "fuentes": [
+        "aap_disciplina",
+        "mayo_relajacion",
+        "yt_respiracion"
       ]
     },
     {
@@ -320,6 +339,10 @@
       "botones": [
         "Me siento estresada/o",
         "Ideas para tiempo para mí"
+      ],
+      "fuentes": [
+        "odphp_cuidador",
+        "unicef_autocuidado"
       ]
     },
     {
@@ -347,6 +370,10 @@
       "botones": [
         "Me siento estresada/o",
         "Berrinches"
+      ],
+      "fuentes": [
+        "unicef_autocuidado",
+        "mayo_relajacion"
       ]
     },
     {
@@ -388,6 +415,9 @@
       "botones": [
         "Pantallas y celular",
         "Me siento estresada/o"
+      ],
+      "fuentes": [
+        "aap_sueno"
       ]
     },
     {
@@ -437,6 +467,11 @@
       "botones": [
         "Pierdo la paciencia",
         "Límites y reglas"
+      ],
+      "fuentes": [
+        "unicef_berrinches",
+        "aap_rabietas",
+        "yt_ninos_calma"
       ]
     },
     {
@@ -473,6 +508,10 @@
       "botones": [
         "Berrinches",
         "Pierdo la paciencia"
+      ],
+      "fuentes": [
+        "aap_disciplina",
+        "unicef_crianza"
       ]
     },
     {
@@ -516,6 +555,9 @@
       "botones": [
         "Problemas para dormir",
         "Hablar con mi hijo/a"
+      ],
+      "fuentes": [
+        "aap_pantallas"
       ]
     },
     {
@@ -558,6 +600,10 @@
       "botones": [
         "Pantallas y celular",
         "Escuela y tareas"
+      ],
+      "fuentes": [
+        "unicef_adolescentes",
+        "unicef_crianza"
       ]
     },
     {
@@ -601,6 +647,9 @@
       "botones": [
         "Acoso escolar",
         "Hablar con mi hijo/a"
+      ],
+      "fuentes": [
+        "unicef_crianza"
       ]
     },
     {
@@ -632,6 +681,9 @@
       "botones": [
         "Hablar con mi hijo/a",
         "Quiero hablar con un especialista"
+      ],
+      "fuentes": [
+        "nichd_bullying"
       ]
     },
     {
@@ -669,6 +721,10 @@
       "botones": [
         "Acoso escolar",
         "Me siento estresada/o"
+      ],
+      "fuentes": [
+        "nichd_bullying",
+        "cdc_ansiedad"
       ]
     },
     {
@@ -708,6 +764,9 @@
       "botones": [
         "Límites y reglas",
         "Problemas para dormir"
+      ],
+      "fuentes": [
+        "unam_comer"
       ]
     },
     {
@@ -744,6 +803,10 @@
       "botones": [
         "Problemas para dormir",
         "Hablar con mi hijo/a"
+      ],
+      "fuentes": [
+        "cdc_ansiedad",
+        "yt_ninos_calma"
       ]
     },
     {
@@ -772,6 +835,9 @@
       "botones": [
         "Berrinches",
         "Pierdo la paciencia"
+      ],
+      "fuentes": [
+        "kh_hermanos"
       ]
     },
     {
@@ -802,6 +868,9 @@
       "botones": [
         "Hablar con mi hijo/a",
         "Quiero hablar con un especialista"
+      ],
+      "fuentes": [
+        "aap_divorcio"
       ]
     },
     {
@@ -831,6 +900,9 @@
       "botones": [
         "Quiero hablar con un especialista",
         "Me siento triste"
+      ],
+      "fuentes": [
+        "aap_duelo"
       ]
     },
     {
@@ -870,6 +942,9 @@
       "botones": [
         "Quiero hablar con un especialista",
         "Escuela y tareas"
+      ],
+      "fuentes": [
+        "unicef_crianza"
       ]
     },
     {
@@ -907,6 +982,10 @@
       "botones": [
         "Hablar con mi hijo/a",
         "Límites y reglas"
+      ],
+      "fuentes": [
+        "aap_sexo_peques",
+        "aap_sexo_escolar"
       ]
     },
     {
@@ -936,6 +1015,9 @@
       "botones": [
         "Nadie me ayuda",
         "Me siento estresada/o"
+      ],
+      "fuentes": [
+        "unicef_estres"
       ]
     },
     {
@@ -965,6 +1047,11 @@
       "botones": [
         "¿Cómo lleno mi bitácora?",
         "Ver mi Rueda de la Vida"
+      ],
+      "fuentes": [
+        "unicef_autocuidado",
+        "mayo_relajacion",
+        "yt_meditacion"
       ]
     },
     {
@@ -994,6 +1081,10 @@
       "botones": [
         "¿Cómo lleno mi bitácora?",
         "Me siento estresada/o"
+      ],
+      "fuentes": [
+        "cdc_ansiedad",
+        "unicef_estres"
       ]
     },
     {
@@ -1005,14 +1096,16 @@
         "registrar mi dia",
         "llenar",
         "registro diario",
-        "como lleno"
+        "como lleno",
+        "llenar mi bitacora",
+        "llenar bitacora"
       ],
       "respuestas": [
         "La bitácora es tu registro diario: anotas tu energía y tu estrés del 1 al 5 y, si quieres, qué te detonó (ruido, prisas, cansancio…). Con eso puedo darte un seguimiento más personal. Toma menos de un minuto."
       ],
       "botones": [
-        "Ver mi Rueda de la Vida",
-        "¿Qué es el Oráculo?"
+        "Llenar mi bitácora ahora",
+        "Ver mi Rueda de la Vida"
       ]
     },
     {
@@ -1110,5 +1203,146 @@
     ]
   },
   "respuesta_negacion": "Está bien, {nombre}. ¿Hay algo más en lo que te pueda acompañar?",
-  "sin_mas_ideas": "Esas son las ideas que tengo sobre este tema por ahora. Si sientes que necesitas más apoyo, puedo orientarte para hablar con un especialista. ¿Quieres ver otros temas?"
+  "sin_mas_ideas": "Esas son las ideas que tengo sobre este tema por ahora. Si sientes que necesitas más apoyo, puedo orientarte para hablar con un especialista. ¿Quieres ver otros temas?",
+  "fuentes": {
+    "aap_rabietas": {
+      "titulo": "Consejos para sobrevivir las rabietas o berrinches",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/family-life/family-dynamics/communication-discipline/Paginas/Temper-Tantrums.aspx",
+      "tipo": "guia"
+    },
+    "aap_disciplina": {
+      "titulo": "¿Cuál es la mejor forma de disciplinar a mi hijo?",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/family-life/family-dynamics/communication-discipline/Paginas/Disciplining-Your-Child.aspx",
+      "tipo": "guia"
+    },
+    "aap_pantallas": {
+      "titulo": "Cómo hacer un plan de uso de pantallas familiar",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/family-life/Media/Paginas/How-to-Make-a-Family-Media-Use-Plan.aspx",
+      "tipo": "guia"
+    },
+    "aap_sueno": {
+      "titulo": "Los buenos hábitos del sueño: ¿cuántas horas necesita su niño?",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/healthy-living/sleep/Paginas/Healthy-Sleep-Habits-How-Many-Hours-Does-Your-Child-Need.aspx",
+      "tipo": "guia"
+    },
+    "kh_hermanos": {
+      "titulo": "Rivalidad entre hermanos",
+      "organizacion": "KidsHealth para padres",
+      "url": "https://kidshealth.org/CHW/es/parents/sibling-rivalry.html",
+      "tipo": "guia"
+    },
+    "aap_divorcio": {
+      "titulo": "Cómo apoyar a los niños después de que sus padres se separan o divorcian",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/healthy-living/emotional-wellness/Building-Resilience/Paginas/How-to-Support-Children-after-Parents-Separate-or-Divorce.aspx",
+      "tipo": "guia"
+    },
+    "aap_duelo": {
+      "titulo": "Cómo entienden los niños la muerte: qué decir cuando un ser querido muere",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/healthy-living/emotional-wellness/Building-Resilience/Paginas/how-children-understand-death-what-you-should-say.aspx",
+      "tipo": "guia"
+    },
+    "unicef_crianza": {
+      "titulo": "Materiales de crianza positiva para madres, padres y cuidadores",
+      "organizacion": "UNICEF México",
+      "url": "https://www.unicef.org/mexico/informes/materiales-de-crianza-positiva-para-madres-padres-y-cuidadores",
+      "tipo": "guia"
+    },
+    "unicef_adolescentes": {
+      "titulo": "11 consejos para tener una buena comunicación con los adolescentes",
+      "organizacion": "UNICEF · Portal sobre crianza",
+      "url": "https://www.unicef.org/parenting/es/cuidad-infantil/11-consejos-tener-buena-comunicacion-con-adolescentes",
+      "tipo": "guia"
+    },
+    "nichd_bullying": {
+      "titulo": "Hostigamiento (bullying): generalidades",
+      "organizacion": "NICHD · Institutos Nacionales de Salud (EE. UU.)",
+      "url": "https://espanol.nichd.nih.gov/salud/temas/bullying",
+      "tipo": "investigacion"
+    },
+    "cdc_ansiedad": {
+      "titulo": "La ansiedad y la depresión en los niños",
+      "organizacion": "CDC (EE. UU.)",
+      "url": "https://www.cdc.gov/children-mental-health/es/about/la-ansiedad-y-la-depresion-en-los-ninos.html",
+      "tipo": "investigacion"
+    },
+    "aap_sexo_peques": {
+      "titulo": "Cuándo y cómo hablar de sexo con su hijo",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/ages-stages/preschool/Paginas/Talking-to-Your-Young-Child-About-Sex.aspx",
+      "tipo": "guia"
+    },
+    "aap_sexo_escolar": {
+      "titulo": "Cómo hablar sobre el sexo con su hijo",
+      "organizacion": "HealthyChildren.org · Academia Americana de Pediatría",
+      "url": "https://www.healthychildren.org/Spanish/ages-stages/gradeschool/puberty/Paginas/Talking-to-Your-Child-About-Sex.aspx",
+      "tipo": "guia"
+    },
+    "mayo_perimenopausia": {
+      "titulo": "Perimenopausia: síntomas y causas",
+      "organizacion": "Mayo Clinic",
+      "url": "https://www.mayoclinic.org/es/diseases-conditions/perimenopause/symptoms-causes/syc-20354666",
+      "tipo": "investigacion"
+    },
+    "unicef_autocuidado": {
+      "titulo": "Estrategias cotidianas de autocuidado para padres y madres",
+      "organizacion": "UNICEF América Latina y el Caribe",
+      "url": "https://www.unicef.org/lac/crianza/cuidado/estrategias-cotidianas-autocuidado-hijos-hogar",
+      "tipo": "guia"
+    },
+    "mayo_relajacion": {
+      "titulo": "Técnicas de relajación: pruebe estas medidas para disminuir el estrés",
+      "organizacion": "Mayo Clinic",
+      "url": "https://www.mayoclinic.org/es/healthy-lifestyle/stress-management/in-depth/deep-breathing/art-20045368",
+      "tipo": "guia"
+    },
+    "odphp_cuidador": {
+      "titulo": "Busque apoyo si es cuidador",
+      "organizacion": "MiBuscadorDeSalud · Gobierno de EE. UU.",
+      "url": "https://odphp.health.gov/espanol/myhealthfinder/viviendo-sanamente/salud-mental-relaciones-otras-personas/busque-apoyo-si-es-cuidador",
+      "tipo": "guia"
+    },
+    "unicef_berrinches": {
+      "titulo": "Cómo manejar los berrinches",
+      "organizacion": "UNICEF México",
+      "url": "https://www.unicef.org/mexico/historias/c%C3%B3mo-manejar-los-berrinches",
+      "tipo": "guia"
+    },
+    "unam_comer": {
+      "titulo": "Niños y niñas selectivos para comer: estrategias y recomendaciones",
+      "organizacion": "CENDI · UNAM",
+      "url": "https://www.personal.unam.mx/Docs/Cendi/ninios-ninias-selectivos.pdf",
+      "tipo": "guia"
+    },
+    "unicef_estres": {
+      "titulo": "Estrés y crianza: ¿cómo cuidar la salud mental de madres, padres y cuidadores?",
+      "organizacion": "UNICEF Uruguay",
+      "url": "https://www.unicef.org/uruguay/crianza/salud-mental/Como-cuidar-la-salud-mental-de-madres-padres-y-cuidadores",
+      "tipo": "guia"
+    },
+    "yt_respiracion": {
+      "titulo": "Videos de respiración guiada (búsqueda en YouTube)",
+      "organizacion": "YouTube",
+      "url": "https://www.youtube.com/results?search_query=respiraci%C3%B3n+guiada+para+calmar+la+ansiedad+5+minutos",
+      "tipo": "video"
+    },
+    "yt_meditacion": {
+      "titulo": "Videos de meditación guiada corta (búsqueda en YouTube)",
+      "organizacion": "YouTube",
+      "url": "https://www.youtube.com/results?search_query=meditaci%C3%B3n+guiada+10+minutos+espa%C3%B1ol",
+      "tipo": "video"
+    },
+    "yt_ninos_calma": {
+      "titulo": "Videos de respiración para niños (búsqueda en YouTube)",
+      "organizacion": "YouTube",
+      "url": "https://www.youtube.com/results?search_query=respiraci%C3%B3n+para+ni%C3%B1os+calmarse",
+      "tipo": "video"
+    }
+  },
+  "_nota_fuentes": "Cada tema indica en 'fuentes' los ids del catálogo 'fuentes'. Todas las ligas se verificaron en octubre de 2026. Las de tipo 'video' son búsquedas en YouTube (no videos fijos) para no depender de un video que pueda borrarse; Treselefantes puede reemplazarlas por videos propios o seleccionados."
 }

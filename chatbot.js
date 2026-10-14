@@ -1,4 +1,5 @@
-/* Treselefantes · Acompañante (prototipo v2)
+/* Treselefantes · Acompañante (prototipo v3)
+ * Novedades v3: crear perfil desde cero, bitácora y Rueda de la Vida editables, fuentes en cada recomendación.
  * Chatbot basado en reglas. No usa IA ni claves de API: todo el contenido
  * vive en los archivos .json y se puede editar sin tocar este archivo.
  *
@@ -25,6 +26,7 @@ function nuevoContexto() {
     temaPendiente: null,   // tema que el bot ofreció y espera un «sí»
     vistas: {},            // cuántas respuestas/ideas se han mostrado por tema
     crucesMostrados: new Set(),
+    fuentesMostradas: new Set(), // las fuentes de cada tema se muestran una vez por conversación
     fallos: 0,             // mensajes seguidos sin entender
     modoCuidado: false,    // se activó un Código Rojo en esta conversación
   };
@@ -150,36 +152,375 @@ async function cargarDatos() {
   return { usuarios, intenciones, cruces, codigoRojo };
 }
 
+/* ---------- Perfiles propios (guardados en este navegador) ---------- */
+// En la versión real esto vive en el servidor de Treselefantes, con consentimiento y cifrado.
+
+const CLAVE_PERFILES = "treselefantes_perfiles";
+const ETAPAS = {
+  adulto: "Adultez",
+  posparto: "Posparto",
+  perimenopausia: "Perimenopausia",
+  menopausia: "Menopausia",
+  adulto_mayor: "Adulta/o mayor",
+  docente: "Docente",
+};
+const DETONANTES = ["Ruido", "Prisas", "Cansancio", "Falta de sueño", "Trabajo", "Dinero", "Pareja", "Berrinches", "Tareas escolares", "Pantallas", "Peleas entre hermanos", "Salud"];
+const DIAS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+function leerPerfiles() {
+  try { return JSON.parse(localStorage.getItem(CLAVE_PERFILES)) || []; } catch { return []; }
+}
+function guardarPerfiles(lista) {
+  try { localStorage.setItem(CLAVE_PERFILES, JSON.stringify(lista)); } catch { /* sin almacenamiento */ }
+}
+function guardarPerfilActivo() {
+  const p = estado.perfil;
+  if (!p || !p.propio) return;
+  const lista = leerPerfiles();
+  const i = lista.findIndex((x) => x.id === p.id);
+  if (i >= 0) lista[i] = p; else lista.push(p);
+  guardarPerfiles(lista);
+}
+
+function hoyISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+function diasEntre(isoA, isoB) {
+  return Math.round((new Date(isoB + "T12:00") - new Date(isoA + "T12:00")) / 86400000);
+}
+function etiquetaDia(registro) {
+  return registro.dia || DIAS[new Date(registro.fecha + "T12:00").getDay()];
+}
+
+// Días desde el último acceso: los perfiles propios lo calculan con la fecha real.
+function diasSinEntrar(perfil) {
+  if (!perfil.propio) return perfil.dias_desde_ultimo_acceso;
+  return perfil.ultimo_acceso ? diasEntre(perfil.ultimo_acceso, hoyISO()) : 0;
+}
+
+function descripcionPerfil(p) {
+  if (p.rol === "docente") return p.grupo ? `Docente · ${p.grupo.nombre}` : "Docente";
+  const n = p.hijos.length;
+  const edades = p.hijos.map((h) => h.edad).join(", ");
+  return `${p.edad ? p.edad + " años · " : ""}${n} ${n === 1 ? "niña/o" : "niñas/os"}${n ? ` de ${edades}` : ""}`;
+}
+
 /* ---------- Pantalla de perfiles ---------- */
 
+function mostrarPantalla(id) {
+  ["pantalla-perfiles", "pantalla-registro", "pantalla-chat"].forEach((p) => (document.getElementById(p).hidden = p !== id));
+  window.scrollTo(0, 0);
+}
+
+function tarjetaPerfil(p, onClick) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "tarjeta-perfil";
+  const conDatos = p.bitacora.length;
+  const estresProm = conDatos ? promedio(p.bitacora.map((d) => d.estres)).toFixed(1) + " de 5" : "sin registros";
+  const dias = diasSinEntrar(p);
+  btn.innerHTML = `
+    <span class="rol">${p.rol === "docente" ? "Docente" : "Familia"}</span>
+    <h2>${escapar(p.nombre)}</h2>
+    <span>${escapar(p.descripcion || descripcionPerfil(p))}</span>
+    <span class="dato">Estrés promedio: ${estresProm} · Último acceso: ${textoAcceso(dias)}</span>`;
+  btn.addEventListener("click", onClick);
+  return btn;
+}
+
 function mostrarPerfiles() {
+  const propios = document.getElementById("lista-propios");
+  propios.innerHTML = "";
+  leerPerfiles().forEach((p) => propios.appendChild(tarjetaPerfil(p, () => iniciarChat(p))));
+  const crear = document.createElement("button");
+  crear.type = "button";
+  crear.className = "tarjeta-perfil tarjeta-crear";
+  crear.innerHTML = `<span class="mas" aria-hidden="true">+</span><h2>Crear mi perfil</h2><span>Toma 2 minutos: tus datos, tu familia y tu Rueda de la Vida.</span>`;
+  crear.addEventListener("click", () => abrirRegistro());
+  propios.appendChild(crear);
+
   const lista = document.getElementById("lista-perfiles");
   lista.innerHTML = "";
-  estado.datos.usuarios.perfiles.forEach((p) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "tarjeta-perfil";
-    const estresProm = promedio(p.bitacora.map((d) => d.estres)).toFixed(1);
-    btn.innerHTML = `
-      <span class="rol">${p.rol === "docente" ? "Docente" : "Familia"}</span>
-      <h2>${p.nombre}</h2>
-      <span>${p.descripcion}</span>
-      <span class="dato">Estrés promedio: ${estresProm} de 5 · Último acceso: ${textoAcceso(p.dias_desde_ultimo_acceso)}</span>`;
-    btn.addEventListener("click", () => iniciarChat(p));
-    lista.appendChild(btn);
-  });
-  document.getElementById("pantalla-perfiles").hidden = false;
-  document.getElementById("pantalla-chat").hidden = true;
+  estado.datos.usuarios.perfiles.forEach((p) => lista.appendChild(tarjetaPerfil(p, () => iniciarChat(p))));
+  mostrarPantalla("pantalla-perfiles");
 }
 
 function promedio(nums) {
-  return nums.reduce((a, b) => a + b, 0) / nums.length;
+  return nums.length ? nums.reduce((a, b) => a + b, 0) / nums.length : 0;
 }
 
 function textoAcceso(dias) {
   if (dias === 0) return "hoy";
   if (dias === 1) return "ayer";
   return `hace ${dias} días`;
+}
+
+function escapar(t) {
+  return String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* ---------- Registro: crear o editar perfil ---------- */
+
+const registro = { paso: 1, editando: null };
+
+function abrirRegistro(perfil = null) {
+  registro.paso = 1;
+  registro.editando = perfil;
+  const f = document.getElementById("form-registro");
+  f.reset();
+  document.getElementById("registro-titulo").textContent = perfil ? "Edita tu perfil" : "Crea tu perfil";
+  document.getElementById("lista-hijos").innerHTML = "";
+  document.getElementById("registro-error").hidden = true;
+
+  if (perfil) {
+    document.getElementById("reg-nombre").value = perfil.nombre;
+    f.querySelector(`input[name=rol][value=${perfil.rol}]`).checked = true;
+    document.getElementById("reg-edad").value = perfil.edad || "";
+    if (perfil.etapa_cuidador !== "docente") document.getElementById("reg-etapa").value = perfil.etapa_cuidador;
+    document.getElementById("reg-consentimiento").checked = true;
+    perfil.hijos.forEach((h) => agregarFilaHijo(h));
+    if (perfil.grupo) {
+      document.getElementById("reg-grupo").value = perfil.grupo.nombre;
+      document.getElementById("reg-gmin").value = perfil.grupo.edad_min;
+      document.getElementById("reg-gmax").value = perfil.grupo.edad_max;
+    }
+  }
+  if (!document.querySelector("#lista-hijos .fila-hijo")) agregarFilaHijo();
+  pintarEditorRueda(document.getElementById("reg-rueda"), perfil ? perfil.rueda : null, "reg");
+  actualizarRol();
+  mostrarPaso();
+  mostrarPantalla("pantalla-registro");
+  document.getElementById("reg-nombre").focus();
+}
+
+let contadorHijos = 0;
+function agregarFilaHijo(h = {}) {
+  contadorHijos++;
+  const fila = document.createElement("div");
+  fila.className = "fila-hijo";
+  fila.innerHTML = `
+    <div class="campo">
+      <label for="hijo-nombre-${contadorHijos}">Nombre o apodo</label>
+      <input id="hijo-nombre-${contadorHijos}" class="hijo-nombre" type="text" maxlength="30" value="${escapar(h.nombre || "")}" placeholder="Ej. Mateo">
+    </div>
+    <div class="campo campo-corto">
+      <label for="hijo-edad-${contadorHijos}">Edad</label>
+      <input id="hijo-edad-${contadorHijos}" class="hijo-edad" type="number" min="0" max="18" value="${h.edad ?? ""}" placeholder="0–18">
+    </div>
+    <button type="button" class="btn-quitar" aria-label="Quitar">×</button>`;
+  fila.querySelector(".btn-quitar").addEventListener("click", () => {
+    if (document.querySelectorAll("#lista-hijos .fila-hijo").length > 1) fila.remove();
+  });
+  document.getElementById("lista-hijos").appendChild(fila);
+}
+
+function rolElegido() {
+  return document.querySelector("#form-registro input[name=rol]:checked").value;
+}
+
+function actualizarRol() {
+  const docente = rolElegido() === "docente";
+  document.getElementById("campo-etapa").hidden = docente;
+  document.getElementById("bloque-hijos").hidden = docente;
+  document.getElementById("bloque-grupo").hidden = !docente;
+  document.getElementById("leyenda-familia").textContent = docente ? "Tu grupo" : "Tu familia";
+  document.querySelector('.pasos li[data-paso="2"]').textContent = docente ? "Tu grupo" : "Tu familia";
+}
+
+function mostrarPaso() {
+  document.querySelectorAll("#form-registro .paso").forEach((p) => (p.hidden = Number(p.dataset.paso) !== registro.paso));
+  document.querySelectorAll(".pasos li").forEach((li) => {
+    const n = Number(li.dataset.paso);
+    li.classList.toggle("activo", n === registro.paso);
+    li.classList.toggle("hecho", n < registro.paso);
+  });
+  document.getElementById("btn-reg-atras").textContent = registro.paso === 1 ? "Cancelar" : "Atrás";
+  document.getElementById("btn-reg-siguiente").textContent = registro.paso === 3 ? (registro.editando ? "Guardar cambios" : "Crear mi perfil") : "Siguiente";
+  document.getElementById("registro-error").hidden = true;
+}
+
+function errorRegistro(msg) {
+  const e = document.getElementById("registro-error");
+  e.textContent = msg;
+  e.hidden = false;
+}
+
+function validarPaso() {
+  if (registro.paso === 1) {
+    if (!document.getElementById("reg-nombre").value.trim()) return "Escribe tu nombre o un apodo para continuar.";
+    if (!document.getElementById("reg-consentimiento").checked) return "Para continuar necesitamos tu consentimiento sobre el uso de tus datos.";
+  }
+  if (registro.paso === 2) {
+    if (rolElegido() === "docente") {
+      const min = Number(document.getElementById("reg-gmin").value), max = Number(document.getElementById("reg-gmax").value);
+      if (!document.getElementById("reg-grupo").value.trim()) return "Escribe el nombre de tu grupo.";
+      if (!(min >= 0 && max <= 18 && min <= max && document.getElementById("reg-gmax").value !== "")) return "Revisa las edades del grupo: deben ir de 0 a 18 y la mínima no puede ser mayor que la máxima.";
+    } else {
+      const filas = [...document.querySelectorAll("#lista-hijos .fila-hijo")];
+      const validas = filas.filter((f) => f.querySelector(".hijo-nombre").value.trim() && f.querySelector(".hijo-edad").value !== "");
+      if (!validas.length) return "Agrega al menos a una niña o niño con su nombre y edad.";
+      if (validas.some((f) => { const e = Number(f.querySelector(".hijo-edad").value); return e < 0 || e > 18; })) return "Las edades deben ir de 0 a 18 años.";
+    }
+  }
+  return null;
+}
+
+function construirPerfil() {
+  const docente = rolElegido() === "docente";
+  const base = registro.editando || {
+    id: "propio-" + Date.now().toString(36),
+    propio: true,
+    bitacora: [],
+    creado: hoyISO(),
+    ultimo_acceso: hoyISO(),
+  };
+  const p = { ...base };
+  p.nombre = document.getElementById("reg-nombre").value.trim();
+  p.rol = docente ? "docente" : "familia";
+  p.edad = Number(document.getElementById("reg-edad").value) || null;
+  p.etapa_cuidador = docente ? "docente" : document.getElementById("reg-etapa").value;
+  p.etapa_texto = ETAPAS[p.etapa_cuidador];
+  p.hijos = docente ? [] : [...document.querySelectorAll("#lista-hijos .fila-hijo")]
+    .map((f) => ({ nombre: f.querySelector(".hijo-nombre").value.trim(), edad: Number(f.querySelector(".hijo-edad").value) }))
+    .filter((h) => h.nombre && !Number.isNaN(h.edad));
+  p.grupo = docente ? {
+    nombre: document.getElementById("reg-grupo").value.trim(),
+    edad_min: Number(document.getElementById("reg-gmin").value),
+    edad_max: Number(document.getElementById("reg-gmax").value),
+  } : null;
+  p.rueda = leerEditorRueda(document.getElementById("reg-rueda"));
+  p.descripcion = descripcionPerfil(p);
+  return p;
+}
+
+function enviarRegistro(e) {
+  e.preventDefault();
+  const error = validarPaso();
+  if (error) return errorRegistro(error);
+  if (registro.paso < 3) {
+    registro.paso++;
+    mostrarPaso();
+    return;
+  }
+  const perfil = construirPerfil();
+  const lista = leerPerfiles();
+  const i = lista.findIndex((x) => x.id === perfil.id);
+  if (i >= 0) lista[i] = perfil; else lista.push(perfil);
+  guardarPerfiles(lista);
+  iniciarChat(perfil, { nuevo: !registro.editando });
+}
+
+function atrasRegistro() {
+  if (registro.paso > 1) {
+    registro.paso--;
+    mostrarPaso();
+  } else if (registro.editando) {
+    iniciarChat(registro.editando);
+  } else {
+    mostrarPerfiles();
+  }
+}
+
+/* ---------- Editores: Rueda de la Vida y bitácora ---------- */
+
+function pintarEditorRueda(contenedorEditor, valores, prefijo) {
+  const areas = estado.datos.usuarios.areas_rueda;
+  contenedorEditor.innerHTML = areas.map((a, i) => {
+    const v = valores ? valores[a] : 5;
+    return `<div class="rueda-fila">
+      <label for="${prefijo}-rueda-${i}">${a}</label>
+      <input id="${prefijo}-rueda-${i}" type="range" min="1" max="10" step="1" value="${v}" data-area="${a}">
+      <output for="${prefijo}-rueda-${i}">${v}</output>
+    </div>`;
+  }).join("");
+  contenedorEditor.querySelectorAll("input[type=range]").forEach((r) =>
+    r.addEventListener("input", () => (r.nextElementSibling.textContent = r.value))
+  );
+}
+
+function leerEditorRueda(contenedorEditor) {
+  const r = {};
+  contenedorEditor.querySelectorAll("input[type=range]").forEach((i) => (r[i.dataset.area] = Number(i.value)));
+  return r;
+}
+
+function pintarEscala(cont, valorInicial) {
+  const campo = cont.dataset.campo;
+  cont.innerHTML = [1, 2, 3, 4, 5].map((n) => `
+    <label class="punto"><input type="radio" name="bit-${campo}" value="${n}" ${n === valorInicial ? "checked" : ""}><span>${n}</span></label>`).join("");
+}
+
+function abrirBitacora() {
+  const p = estado.perfil;
+  const hoy = p.bitacora.find((r) => r.fecha === hoyISO());
+  document.getElementById("bitacora-fecha").textContent =
+    new Date().toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" }) + (hoy ? " · ya tienes un registro hoy; puedes actualizarlo" : "");
+  document.querySelectorAll("#dlg-bitacora .escala").forEach((c) => pintarEscala(c, hoy ? hoy[c.dataset.campo] : 3));
+  const elegidos = hoy ? hoy.detonantes.map((d) => d.toLowerCase()) : [];
+  document.getElementById("bitacora-detonantes").innerHTML = DETONANTES.map((d, i) => `
+    <label class="chip-check"><input type="checkbox" id="det-${i}" value="${d}" ${elegidos.includes(d.toLowerCase()) ? "checked" : ""}><span>${d}</span></label>`).join("");
+  const extra = hoy ? hoy.detonantes.filter((d) => !DETONANTES.map((x) => x.toLowerCase()).includes(d.toLowerCase())) : [];
+  document.getElementById("bitacora-otro").value = extra.join(", ");
+  document.getElementById("bitacora-nota").value = hoy?.nota || "";
+  document.getElementById("dlg-bitacora").showModal();
+}
+
+async function guardarBitacora(e) {
+  e.preventDefault();
+  const dlg = document.getElementById("dlg-bitacora");
+  const energia = Number(dlg.querySelector("input[name=bit-energia]:checked")?.value || 3);
+  const estres = Number(dlg.querySelector("input[name=bit-estres]:checked")?.value || 3);
+  const detonantes = [...dlg.querySelectorAll("#bitacora-detonantes input:checked")].map((i) => i.value.toLowerCase());
+  const otro = document.getElementById("bitacora-otro").value.trim();
+  if (otro) otro.split(",").map((x) => x.trim().toLowerCase()).filter(Boolean).forEach((x) => detonantes.push(x));
+  const registroDia = { fecha: hoyISO(), energia, estres, detonantes, nota: document.getElementById("bitacora-nota").value.trim() };
+
+  const p = estado.perfil;
+  if (!p.propio) {
+    // Perfiles de ejemplo: el registro de hoy reemplaza al día más antiguo (solo en esta sesión)
+    if (p.bitacora.length && !p.bitacora[p.bitacora.length - 1].fecha) p.bitacora.shift();
+  }
+  const i = p.bitacora.findIndex((r) => r.fecha === registroDia.fecha);
+  if (i >= 0) p.bitacora[i] = registroDia; else p.bitacora.push(registroDia);
+  p.bitacora = p.bitacora.slice(-60);
+  guardarPerfilActivo();
+  dlg.close();
+  pintarPanel(p);
+  registrar({ intencion: "bitacora_llenada" });
+  await reaccionarBitacora(registroDia);
+}
+
+// El acompañante comenta el registro del día y propone un tema relacionado.
+async function reaccionarBitacora(r) {
+  const ctx = estado.ctx;
+  let texto, tema = null;
+  const det = r.detonantes[0];
+  if (r.estres >= 4) {
+    texto = `Gracias por registrarlo. Hoy marcaste estrés de ${r.estres} de 5${det ? ` y «${det}» como detonante` : ""}. ¿Quieres que veamos algo para bajarlo un poco?`;
+    tema = det === "ruido" ? "ruido" : det === "berrinches" ? "berrinches" : det === "pareja" ? "pareja" : "estres";
+  } else if (r.energia <= 2) {
+    texto = `Gracias por registrarlo. Tu energía está baja hoy (${r.energia} de 5). ¿Te comparto ideas pequeñas para recargar?`;
+    tema = "tiempo_para_mi";
+  } else {
+    texto = `¡Listo! Tu día se ve bastante bien: energía ${r.energia} y estrés ${r.estres} de 5. Me da gusto. ¿Hay algo en lo que te pueda acompañar?`;
+  }
+  ctx.temaPendiente = tema;
+  await conEscribiendo(() => agregarBurbuja(texto));
+  mostrarBotones(tema ? ["Sí", "Ahorita no"] : ["Me siento estresada/o", "Berrinches", "Problemas para dormir"]);
+}
+
+async function guardarRueda(e) {
+  e.preventDefault();
+  const p = estado.perfil;
+  p.rueda = leerEditorRueda(document.getElementById("editor-rueda"));
+  guardarPerfilActivo();
+  document.getElementById("dlg-rueda").close();
+  pintarPanel(p);
+  registrar({ intencion: "rueda_actualizada" });
+  await conEscribiendo(() => agregarBurbuja(`Actualicé tu Rueda de la Vida. Tu área más baja ahora es «${areaMasBaja(p)}». ¿Quieres ideas para cuidarla?`));
+  estado.ctx.temaPendiente = "tiempo_para_mi";
+  mostrarBotones(["Sí", "Ahorita no"]);
 }
 
 /* ---------- Panel del perfil ---------- */
@@ -196,29 +537,39 @@ function crucesDelPerfil(perfil) {
 }
 
 function pintarPanel(perfil) {
+  estado.crucesPerfil = crucesDelPerfil(perfil);
   document.getElementById("perfil-nombre").textContent = perfil.nombre;
-  document.getElementById("perfil-descripcion").textContent = perfil.descripcion;
+  document.getElementById("perfil-descripcion").textContent = perfil.descripcion || descripcionPerfil(perfil);
   document.getElementById("perfil-etapa").textContent = perfil.etapa_texto;
+  document.getElementById("bloque-privacidad").hidden = !perfil.propio;
+  document.getElementById("confirmar-borrado").hidden = true;
 
   const hijos = document.getElementById("perfil-hijos");
   hijos.innerHTML = "";
   if (perfil.hijos.length) {
-    perfil.hijos.forEach((h) => (hijos.innerHTML += `<li>${h.nombre}, ${h.edad} años</li>`));
+    perfil.hijos.forEach((h) => (hijos.innerHTML += `<li>${escapar(h.nombre)}, ${h.edad} ${h.edad === 1 ? "año" : "años"}</li>`));
   } else if (perfil.grupo) {
-    hijos.innerHTML = `<li>${perfil.grupo.nombre} (${perfil.grupo.edad_min}–${perfil.grupo.edad_max} años)</li>`;
+    hijos.innerHTML = `<li>${escapar(perfil.grupo.nombre)} (${perfil.grupo.edad_min}–${perfil.grupo.edad_max} años)</li>`;
   }
 
-  // Gráfica de barras del estrés (1 a 5) de los últimos 7 días
-  const ancho = 280, alto = 96, base = 78, paso = ancho / 7;
-  let barras = "";
-  perfil.bitacora.forEach((d, i) => {
-    const h = (d.estres / 5) * 64;
-    const x = i * paso + paso * 0.2;
-    barras += `<rect class="barra ${d.estres >= 4 ? "alta" : ""}" x="${x}" y="${base - h}" width="${paso * 0.6}" height="${h}" rx="3"><title>${d.dia}: estrés ${d.estres} de 5</title></rect>`;
-    barras += `<text x="${x + paso * 0.3}" y="${base + 14}" text-anchor="middle">${d.dia}</text>`;
-  });
-  document.getElementById("grafica-estres").innerHTML =
-    `<svg viewBox="0 0 ${ancho} ${alto}" role="img" aria-label="Estrés de los últimos 7 días">${barras}</svg>`;
+  // Gráfica de barras del estrés (1 a 5) de los últimos 7 registros
+  const ultimos = perfil.bitacora.slice(-7);
+  const grafica = document.getElementById("grafica-estres");
+  if (!ultimos.length) {
+    grafica.innerHTML = `<p class="vacio">Aún no hay registros. Llena tu bitácora de hoy para empezar a ver tu semana.</p>`;
+  } else {
+    const ancho = 280, alto = 96, base = 78, paso = ancho / 7;
+    let barras = "";
+    ultimos.forEach((d, i) => {
+      const h = (d.estres / 5) * 64;
+      const x = i * paso + paso * 0.2;
+      barras += `<rect class="barra ${d.estres >= 4 ? "alta" : ""}" x="${x}" y="${base - h}" width="${paso * 0.6}" height="${h}" rx="3"><title>${etiquetaDia(d)}: estrés ${d.estres} de 5, energía ${d.energia} de 5</title></rect>`;
+      barras += `<text x="${x + paso * 0.3}" y="${base + 14}" text-anchor="middle">${etiquetaDia(d)}</text>`;
+    });
+    grafica.innerHTML = `<svg viewBox="0 0 ${ancho} ${alto}" role="img" aria-label="Estrés de los últimos registros">${barras}</svg><p class="leyenda-grafica">Estrés por día (1 a 5)</p>`;
+  }
+  const llenoHoy = perfil.bitacora.some((r) => r.fecha === hoyISO());
+  document.getElementById("btn-bitacora").textContent = llenoHoy ? "Editar hoy" : "Llenar hoy";
 
   const rueda = document.getElementById("rueda");
   const baja = areaMasBaja(perfil);
@@ -235,6 +586,23 @@ function pintarPanel(perfil) {
   actualizarContador();
 }
 
+// ¿Todas las áreas de la Rueda tienen el mismo valor? (entonces no hay un «área más baja» real)
+function ruedaPareja(perfil) {
+  const v = Object.values(perfil.rueda);
+  return Math.min(...v) === Math.max(...v);
+}
+
+function borrarPerfil() {
+  const id = estado.perfil.id;
+  guardarPerfiles(leerPerfiles().filter((p) => p.id !== id));
+  try {
+    const reg = JSON.parse(localStorage.getItem(CLAVE_REGISTRO)) || [];
+    localStorage.setItem(CLAVE_REGISTRO, JSON.stringify(reg.filter((r) => r.perfil !== id)));
+  } catch { /* sin almacenamiento */ }
+  estado.perfil = null;
+  mostrarPerfiles();
+}
+
 /* ---------- Mensajes en pantalla ---------- */
 
 const contenedor = () => document.getElementById("mensajes");
@@ -248,13 +616,38 @@ function agregarBurbuja(texto, tipo = "bot") {
   return div;
 }
 
+const ICONO_FUENTE = { guia: "Guía", investigacion: "Información de salud", video: "Videos" };
+
+// Bloque «Para saber más» con las fuentes de un tema o de una regla de cruce.
+function agregarFuentes(ids = []) {
+  const catalogo = estado.datos.intenciones.fuentes || {};
+  const fuentes = ids.map((id) => catalogo[id]).filter(Boolean);
+  if (!fuentes.length) return;
+  const div = document.createElement("div");
+  div.className = "fuentes";
+  div.innerHTML = `<span class="fuentes-titulo">Para saber más</span><ul>${fuentes.map((f) => `
+    <li><a href="${f.url}" target="_blank" rel="noopener noreferrer">
+      <span class="fuente-tipo tipo-${f.tipo}">${ICONO_FUENTE[f.tipo] || "Fuente"}</span>
+      <span class="fuente-texto"><strong>${escapar(f.titulo)}</strong><span>${escapar(f.organizacion)}</span></span>
+    </a></li>`).join("")}</ul>`;
+  contenedor().appendChild(div);
+  bajarScroll();
+}
+
 function agregarTip(regla) {
   const div = document.createElement("div");
   div.className = "burbuja tip";
   div.innerHTML = `<strong>Para tu etapa: ${regla.titulo}</strong>${regla.explicacion} ${regla.recomendacion}`;
   contenedor().appendChild(div);
   bajarScroll();
+  if (regla.fuentes) agregarFuentes(regla.fuentes);
 }
+
+// Botones especiales que abren una ventana en lugar de enviar un mensaje
+const ACCIONES_BOTON = {
+  "Llenar mi bitácora ahora": () => abrirBitacora(),
+  "Actualizar mi Rueda": () => abrirRueda(),
+};
 
 function mostrarBotones(lista = []) {
   const zona = document.getElementById("botones-rapidos");
@@ -263,9 +656,14 @@ function mostrarBotones(lista = []) {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = texto;
-    b.addEventListener("click", () => procesarMensaje(texto));
+    b.addEventListener("click", () => (ACCIONES_BOTON[texto] ? ACCIONES_BOTON[texto]() : procesarMensaje(texto)));
     zona.appendChild(b);
   });
+}
+
+function abrirRueda() {
+  pintarEditorRueda(document.getElementById("editor-rueda"), estado.perfil.rueda, "dlg");
+  document.getElementById("dlg-rueda").showModal();
 }
 
 function bajarScroll() {
@@ -292,32 +690,56 @@ function conEscribiendo(fn, ms = 600) {
 
 /* ---------- Inicio de la conversación ---------- */
 
-async function iniciarChat(perfil) {
-  estado.perfil = perfil;
-  estado.crucesPerfil = crucesDelPerfil(perfil);
+async function iniciarChat(perfil, opciones = {}) {
+  // Los perfiles de ejemplo se copian para que los cambios de la sesión no toquen los datos originales
+  estado.perfil = perfil.propio ? perfil : JSON.parse(JSON.stringify(perfil));
+  perfil = estado.perfil;
+  const diasFuera = diasSinEntrar(perfil);
+  if (perfil.propio) {
+    perfil.ultimo_acceso = hoyISO();
+    guardarPerfilActivo();
+  }
   estado.ctx = nuevoContexto();
-  document.getElementById("pantalla-perfiles").hidden = true;
-  document.getElementById("pantalla-chat").hidden = false;
+  mostrarPantalla("pantalla-chat");
   document.getElementById("barra-emergencia").classList.remove("activa");
   contenedor().innerHTML = "";
   mostrarBotones([]);
   pintarPanel(perfil);
 
+  // Perfil recién creado o sin registros: invitar a la primera bitácora
+  if (!perfil.bitacora.length) {
+    const hijos = perfil.hijos.map((h) => h.nombre);
+    const quien = perfil.rol === "docente" ? `tu grupo ${perfil.grupo?.nombre || ""}`.trim()
+      : hijos.length > 1 ? `${hijos.slice(0, -1).join(", ")} y ${hijos.at(-1)}` : hijos[0] || "tu familia";
+    const saludoNuevo = opciones.nuevo
+      ? `¡Bienvenida/o, ${perfil.nombre}! Ya tengo tu perfil y el de ${quien}. ${ruedaPareja(perfil) ? "" : `Tu área más baja en la Rueda de la Vida es «${areaMasBaja(perfil)}». `}Para acompañarte mejor, ¿llenamos tu primera bitácora? Toma menos de un minuto.`
+      : `Hola, ${perfil.nombre}. Todavía no tienes registros en tu bitácora. ¿La llenamos hoy? Toma menos de un minuto.`;
+    await conEscribiendo(() => agregarBurbuja(saludoNuevo));
+    const cruce = estado.crucesPerfil.find((c) => c.temas.includes("saludo_inicial"));
+    if (cruce) {
+      estado.ctx.crucesMostrados.add(cruce.id);
+      await conEscribiendo(() => agregarTip(cruce), 450);
+    }
+    mostrarBotones(["Llenar mi bitácora ahora", "Me siento estresada/o", "Berrinches", "¿Qué es el Oráculo?"]);
+    document.getElementById("campo-mensaje").focus();
+    return;
+  }
+
   // Saludo con contexto según la bitácora. Deja un tema "pendiente" para que un «sí» tenga sentido.
   const ultimos3 = perfil.bitacora.slice(-3);
   const estresAlto = ultimos3.filter((d) => d.estres >= 4).length;
-  const energiaProm = promedio(perfil.bitacora.map((d) => d.energia));
-  const frecuente = masFrecuente(perfil.bitacora.flatMap((d) => d.detonantes));
+  const energiaProm = promedio(perfil.bitacora.slice(-7).map((d) => d.energia));
+  const frecuente = masFrecuente(perfil.bitacora.slice(-7).flatMap((d) => d.detonantes));
 
   let saludo = `Hola, ${perfil.nombre}.`;
   if (estresAlto >= 2) {
-    saludo += ` Veo en tu bitácora que tu estrés ha estado alto en ${estresAlto} de los últimos 3 días${frecuente ? `, y que «${frecuente}» aparece seguido como detonante` : ""}. ¿Quieres que platiquemos de eso?`;
+    saludo += ` Veo en tu bitácora que tu estrés ha estado alto en ${estresAlto} de tus últimos 3 registros${frecuente ? `, y que «${frecuente}» aparece seguido como detonante` : ""}. ¿Quieres que platiquemos de eso?`;
     estado.ctx.temaPendiente = frecuente === "ruido" ? "ruido" : "estres";
   } else if (energiaProm < 2.5) {
     saludo += ` Esta semana tu energía ha estado baja (${energiaProm.toFixed(1)} de 5 en promedio). ¿Quieres que veamos cómo recuperar un poco de energía?`;
     estado.ctx.temaPendiente = "estres";
   } else if (perfil.rol === "docente") {
-    saludo += ` Tu semana se ve bastante estable, aunque «${frecuente || "el grupo"}» aparece en tu bitácora. ¿Quieres que platiquemos de tu grupo?`;
+    saludo += ` Tu semana se ve bastante estable${frecuente ? `, aunque «${frecuente}» aparece en tu bitácora` : ""}. ¿Quieres que platiquemos de tu grupo?`;
     estado.ctx.temaPendiente = "grupo";
   } else {
     saludo += ` Tu semana se ve bastante estable. Tu área más baja en la Rueda de la Vida es «${areaMasBaja(perfil)}». ¿Quieres ideas para cuidarla?`;
@@ -327,10 +749,11 @@ async function iniciarChat(perfil) {
   await conEscribiendo(() => agregarBurbuja(saludo));
 
   // Recordatorio de continuidad (usuario activo = 3 veces por semana)
-  if (perfil.dias_desde_ultimo_acceso > 3) {
+  const llenoHoy = perfil.bitacora.some((r) => r.fecha === hoyISO());
+  if (diasFuera > 3) {
     await conEscribiendo(() =>
       agregarBurbuja(
-        `Por cierto, hace ${perfil.dias_desde_ultimo_acceso} días que no te veía por aquí. Cuando puedas, llena tu bitácora: toma menos de un minuto y me ayuda a acompañarte mejor.`,
+        `Por cierto, hace ${diasFuera} días que no te veía por aquí. Cuando puedas, llena tu bitácora: toma menos de un minuto y me ayuda a acompañarte mejor.`,
         "recordatorio"
       )
     );
@@ -343,10 +766,11 @@ async function iniciarChat(perfil) {
     await conEscribiendo(() => agregarTip(cruceInicial), 450);
   }
 
+  const extra = llenoHoy ? [] : ["Llenar mi bitácora ahora"];
   mostrarBotones(
     perfil.rol === "docente"
-      ? ["Sí", "Conflicto en el grupo", "Me siento estresada/o", "¿Qué es el Oráculo?"]
-      : ["Sí", "Problemas para dormir", "Berrinches", "¿Cómo lleno mi bitácora?"]
+      ? ["Sí", ...extra, "Conflicto en el grupo", "Me siento estresada/o"]
+      : ["Sí", ...extra, "Problemas para dormir", "Berrinches"]
   );
   document.getElementById("campo-mensaje").focus();
 }
@@ -471,6 +895,10 @@ async function responderTema(tema, ref, norm) {
   }
 
   await conEscribiendo(() => agregarBurbuja(rellenar(texto, perfil, ref)));
+  if (tema.fuentes && !ctx.fuentesMostradas.has(tema.id)) {
+    ctx.fuentesMostradas.add(tema.id);
+    agregarFuentes(tema.fuentes);
+  }
 
   // Cruce cuidador–niño relacionado con el tema (solo una vez por conversación)
   const cruce = estado.crucesPerfil.find((c) => c.temas.includes(tema.id) && !ctx.crucesMostrados.has(c.id));
@@ -629,6 +1057,19 @@ document.getElementById("form-mensaje").addEventListener("submit", (e) => {
   campo.value = "";
 });
 document.getElementById("btn-cambiar").addEventListener("click", mostrarPerfiles);
+document.getElementById("form-registro").addEventListener("submit", enviarRegistro);
+document.getElementById("btn-reg-atras").addEventListener("click", atrasRegistro);
+document.getElementById("btn-agregar-hijo").addEventListener("click", () => agregarFilaHijo());
+document.querySelectorAll("#form-registro input[name=rol]").forEach((r) => r.addEventListener("change", actualizarRol));
+document.getElementById("btn-bitacora").addEventListener("click", abrirBitacora);
+document.getElementById("btn-rueda").addEventListener("click", abrirRueda);
+document.getElementById("form-bitacora").addEventListener("submit", guardarBitacora);
+document.getElementById("form-rueda").addEventListener("submit", guardarRueda);
+document.querySelectorAll("dialog [data-cerrar]").forEach((b) => b.addEventListener("click", () => b.closest("dialog").close()));
+document.getElementById("btn-editar-perfil").addEventListener("click", () => abrirRegistro(estado.perfil));
+document.getElementById("btn-borrar-perfil").addEventListener("click", () => (document.getElementById("confirmar-borrado").hidden = false));
+document.getElementById("btn-borrar-no").addEventListener("click", () => (document.getElementById("confirmar-borrado").hidden = true));
+document.getElementById("btn-borrar-si").addEventListener("click", borrarPerfil);
 document.getElementById("btn-csv").addEventListener("click", descargarCSV);
 
 cargarDatos()
@@ -643,4 +1084,4 @@ cargarDatos()
   });
 
 // Exponer funciones para probar el filtro desde la consola del navegador
-window.TE = { normalizar, coincide, revisarCodigoRojo, detectarIntencion, estado };
+window.TE = { normalizar, coincide, revisarCodigoRojo, detectarIntencion, estado, leerPerfiles };

@@ -19,20 +19,113 @@
         <span class="subtitulo">Acompañante · prototipo</span>
       </div>
     </div>
-    <span class="etiqueta-prueba">Datos de prueba</span>
+    <span class="etiqueta-prueba">Prototipo</span>
   </header>
 
-  <!-- Pantalla 1: elegir perfil -->
+  <!-- Pantalla 1: elegir o crear perfil -->
   <main id="pantalla-perfiles" class="pantalla">
     <section class="intro">
-      <h1>¿Con qué perfil quieres probar?</h1>
-      <p>Cada perfil es una persona inventada con su propia bitácora y Rueda de la Vida. El acompañante usa ese historial para personalizar la conversación.</p>
+      <h1>¿Quién eres hoy?</h1>
+      <p>Crea tu propio perfil para que el acompañante te conozca, o prueba con uno de los perfiles de ejemplo.</p>
     </section>
+
+    <h2 class="titulo-seccion">Tus perfiles</h2>
+    <div id="lista-propios" class="lista-perfiles"></div>
+
+    <h2 class="titulo-seccion">Perfiles de ejemplo</h2>
     <div id="lista-perfiles" class="lista-perfiles" aria-live="polite"></div>
     <p id="error-carga" class="error" hidden></p>
   </main>
 
-  <!-- Pantalla 2: chat -->
+  <!-- Pantalla 2: crear perfil desde cero -->
+  <main id="pantalla-registro" class="pantalla" hidden>
+    <form id="form-registro" class="registro" novalidate>
+      <div class="registro-cabecera">
+        <h1 id="registro-titulo">Crea tu perfil</h1>
+        <ol class="pasos" aria-label="Pasos del registro">
+          <li data-paso="1" class="activo">Sobre ti</li>
+          <li data-paso="2">Tu familia</li>
+          <li data-paso="3">Tu Rueda de la Vida</li>
+        </ol>
+      </div>
+
+      <!-- Paso 1 -->
+      <fieldset class="paso" data-paso="1">
+        <legend>Sobre ti</legend>
+        <label for="reg-nombre">¿Cómo te llamas?</label>
+        <input id="reg-nombre" type="text" maxlength="40" placeholder="Tu nombre o apodo" required>
+
+        <span class="etiqueta" id="lbl-rol">¿Cómo usarás Treselefantes?</span>
+        <div class="opciones" role="radiogroup" aria-labelledby="lbl-rol">
+          <label class="opcion"><input type="radio" name="rol" value="familia" checked> <span>Cuido a mis hijos, nietos u otros niños de mi familia</span></label>
+          <label class="opcion"><input type="radio" name="rol" value="docente"> <span>Soy docente</span></label>
+        </div>
+
+        <div class="fila">
+          <div class="campo">
+            <label for="reg-edad">Tu edad</label>
+            <input id="reg-edad" type="number" min="15" max="99" placeholder="Ej. 38">
+          </div>
+          <div class="campo" id="campo-etapa">
+            <label for="reg-etapa">¿En qué etapa estás?</label>
+            <select id="reg-etapa">
+              <option value="adulto">Adultez (sin una etapa especial)</option>
+              <option value="posparto">Posparto (bebé menor de 1 año)</option>
+              <option value="perimenopausia">Perimenopausia</option>
+              <option value="menopausia">Menopausia</option>
+              <option value="adulto_mayor">Adulta/o mayor</option>
+            </select>
+          </div>
+        </div>
+        <p class="ayuda">La etapa sirve para darte sugerencias que combinan lo que tú vives con lo que viven los niños.</p>
+
+        <label class="consentimiento">
+          <input id="reg-consentimiento" type="checkbox" required>
+          <span>Acepto que Treselefantes use mis datos y los de los niños que registre solo para personalizar el acompañamiento. Puedo borrarlos cuando quiera. <em>(En este prototipo se guardan únicamente en este navegador.)</em></span>
+        </label>
+      </fieldset>
+
+      <!-- Paso 2 -->
+      <fieldset class="paso" data-paso="2" hidden>
+        <legend id="leyenda-familia">Tu familia</legend>
+        <div id="bloque-hijos">
+          <p class="ayuda">Agrega a cada niña, niño o adolescente que cuidas. Puedes usar un apodo.</p>
+          <div id="lista-hijos" class="lista-hijos"></div>
+          <button type="button" id="btn-agregar-hijo" class="btn-secundario">+ Agregar otra niña o niño</button>
+        </div>
+        <div id="bloque-grupo" hidden>
+          <p class="ayuda">Cuéntanos de tu grupo.</p>
+          <label for="reg-grupo">Nombre del grupo</label>
+          <input id="reg-grupo" type="text" maxlength="40" placeholder="Ej. 2° B de secundaria">
+          <div class="fila">
+            <div class="campo">
+              <label for="reg-gmin">Edad mínima</label>
+              <input id="reg-gmin" type="number" min="0" max="18" placeholder="12">
+            </div>
+            <div class="campo">
+              <label for="reg-gmax">Edad máxima</label>
+              <input id="reg-gmax" type="number" min="0" max="18" placeholder="15">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Paso 3 -->
+      <fieldset class="paso" data-paso="3" hidden>
+        <legend>Tu Rueda de la Vida</legend>
+        <p class="ayuda">Del 1 al 10, ¿qué tan satisfecha/o te sientes hoy con cada área? No hay respuestas correctas.</p>
+        <div id="reg-rueda" class="rueda-editor"></div>
+      </fieldset>
+
+      <p id="registro-error" class="error" hidden></p>
+      <div class="registro-acciones">
+        <button type="button" id="btn-reg-atras" class="btn-texto">Cancelar</button>
+        <button type="submit" id="btn-reg-siguiente" class="btn-primario">Siguiente</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Pantalla 3: chat -->
   <main id="pantalla-chat" class="pantalla chat-layout" hidden>
     <aside class="panel" aria-label="Resumen del perfil">
       <div class="panel-cabecera">
@@ -50,12 +143,18 @@
       </div>
 
       <div class="panel-bloque">
-        <h3>Estrés de la semana</h3>
+        <div class="bloque-titulo">
+          <h3>Bitácora de la semana</h3>
+          <button type="button" id="btn-bitacora" class="btn-mini">Llenar hoy</button>
+        </div>
         <div id="grafica-estres" class="grafica"></div>
       </div>
 
       <div class="panel-bloque">
-        <h3>Rueda de la Vida</h3>
+        <div class="bloque-titulo">
+          <h3>Rueda de la Vida</h3>
+          <button type="button" id="btn-rueda" class="btn-mini">Actualizar</button>
+        </div>
         <ul id="rueda" class="rueda"></ul>
       </div>
 
@@ -68,6 +167,21 @@
         <h3>Registro para tableros</h3>
         <p class="muted"><span id="contador-registro">0</span> interacciones guardadas en este navegador</p>
         <button id="btn-csv" class="btn-secundario" type="button">Descargar registro (CSV)</button>
+      </div>
+
+      <div class="panel-bloque panel-privacidad" id="bloque-privacidad" hidden>
+        <h3>Tus datos</h3>
+        <div class="acciones-privacidad">
+          <button id="btn-editar-perfil" class="btn-secundario" type="button">Editar mi perfil</button>
+          <button id="btn-borrar-perfil" class="btn-peligro" type="button">Borrar mi perfil y mis datos</button>
+        </div>
+        <div id="confirmar-borrado" class="confirmar" hidden>
+          <p>¿Seguro? Se borrarán tu perfil, tu bitácora y tu Rueda de la Vida de este navegador.</p>
+          <div class="acciones-privacidad">
+            <button id="btn-borrar-si" class="btn-peligro" type="button">Sí, borrar todo</button>
+            <button id="btn-borrar-no" class="btn-secundario" type="button">Cancelar</button>
+          </div>
+        </div>
       </div>
     </aside>
 
@@ -86,6 +200,48 @@
       </form>
     </section>
   </main>
+
+  <!-- Ventana: bitácora del día -->
+  <dialog id="dlg-bitacora" class="dialogo">
+    <form id="form-bitacora" method="dialog">
+      <h2>Bitácora de hoy</h2>
+      <p class="ayuda" id="bitacora-fecha"></p>
+
+      <span class="etiqueta" id="lbl-energia">¿Cuánta energía tienes hoy?</span>
+      <div class="escala" role="radiogroup" aria-labelledby="lbl-energia" data-campo="energia"></div>
+      <div class="escala-extremos"><span>Muy poca</span><span>Mucha</span></div>
+
+      <span class="etiqueta" id="lbl-estres">¿Qué tanto estrés sientes?</span>
+      <div class="escala" role="radiogroup" aria-labelledby="lbl-estres" data-campo="estres"></div>
+      <div class="escala-extremos"><span>Nada</span><span>Muchísimo</span></div>
+
+      <span class="etiqueta" id="lbl-detonantes">¿Qué te detonó hoy? <span class="muted">(puedes elegir varios)</span></span>
+      <div id="bitacora-detonantes" class="detonantes" aria-labelledby="lbl-detonantes"></div>
+      <label for="bitacora-otro" class="sr-only">Otro detonante</label>
+      <input id="bitacora-otro" type="text" maxlength="40" placeholder="Otro (opcional)">
+
+      <label for="bitacora-nota">¿Algo más que quieras anotar? <span class="muted">(opcional)</span></label>
+      <textarea id="bitacora-nota" rows="2" maxlength="300"></textarea>
+
+      <div class="dialogo-acciones">
+        <button type="button" class="btn-texto" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn-primario" value="guardar">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Ventana: Rueda de la Vida -->
+  <dialog id="dlg-rueda" class="dialogo">
+    <form id="form-rueda" method="dialog">
+      <h2>Actualiza tu Rueda de la Vida</h2>
+      <p class="ayuda">Del 1 al 10, ¿cómo te sientes hoy con cada área?</p>
+      <div id="editor-rueda" class="rueda-editor"></div>
+      <div class="dialogo-acciones">
+        <button type="button" class="btn-texto" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn-primario" value="guardar">Guardar</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="chatbot.js"></script>
 </body>
