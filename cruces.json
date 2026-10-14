@@ -1,0 +1,59 @@
+{
+  "_nota": "Reglas que combinan la etapa del cuidador con la edad del niño o del grupo. 'temas' indica en qué conversaciones se muestra la sugerencia. Estas reglas deben revisarse con especialistas de Treselefantes.",
+  "reglas": [
+    {
+      "id": "C1",
+      "etapas_cuidador": ["perimenopausia", "menopausia"],
+      "edad_min": 0, "edad_max": 5,
+      "titulo": "Tu etapa y la de tu hijo/a pueden chocar",
+      "explicacion": "En la perimenopausia es común sentir más sensibilidad al ruido y más cansancio, justo cuando un niño pequeño explora haciendo mucho ruido.",
+      "recomendacion": "Busca pausas cortas de silencio (audífonos con cancelación de ruido, 10 minutos en otro cuarto) y comparte con alguien la parte más ruidosa del día.",
+      "temas": ["estres", "berrinches", "sueno", "saludo_inicial"]
+    },
+    {
+      "id": "C2",
+      "etapas_cuidador": ["perimenopausia", "menopausia"],
+      "edad_min": 11, "edad_max": 18,
+      "titulo": "Dos etapas de cambios al mismo tiempo",
+      "explicacion": "La adolescencia y la menopausia traen cambios hormonales y emocionales a la vez, y es más fácil que haya choques.",
+      "recomendacion": "Nombrarlo en familia ayuda: «las dos estamos pasando por cambios». Acuerden una señal para pausar una discusión y retomarla después.",
+      "temas": ["estres", "berrinches", "comunicacion", "saludo_inicial"]
+    },
+    {
+      "id": "C3",
+      "etapas_cuidador": ["posparto"],
+      "edad_min": 0, "edad_max": 2,
+      "titulo": "El sueño es de los dos",
+      "explicacion": "En el posparto la falta de sueño afecta el ánimo y la paciencia del cuidador tanto como al bebé.",
+      "recomendacion": "Prioriza dormir cuando el bebé duerma al menos una vez al día y pide relevos concretos (una toma, un baño).",
+      "temas": ["estres", "sueno", "saludo_inicial"]
+    },
+    {
+      "id": "C4",
+      "etapas_cuidador": ["adulto_mayor"],
+      "edad_min": 6, "edad_max": 12,
+      "titulo": "Energía distinta, misma importancia",
+      "explicacion": "A los niños de esta edad les sobra energía, y cuidar a dos al mismo tiempo puede ser físicamente pesado a partir de los 60.",
+      "recomendacion": "Alterna actividades activas cortas con otras tranquilas (juegos de mesa, leer juntos) y pide que otro adulto cubra las más físicas.",
+      "temas": ["estres", "berrinches", "escuela", "saludo_inicial"]
+    },
+    {
+      "id": "C5",
+      "etapas_cuidador": ["docente"],
+      "edad_min": 12, "edad_max": 15,
+      "titulo": "Primera adolescencia en el salón",
+      "explicacion": "Entre los 12 y 15 años el grupo pesa más que el adulto, y los conflictos entre compañeros se vuelven centrales.",
+      "recomendacion": "Trabaja con líderes del grupo, no contra ellos, y deja espacios para hablar de emociones antes de tratar el conflicto.",
+      "temas": ["grupo", "estres", "comunicacion", "saludo_inicial"]
+    },
+    {
+      "id": "C6",
+      "etapas_cuidador": ["adulto"],
+      "edad_min": 13, "edad_max": 18,
+      "titulo": "Más autonomía, otra forma de cercanía",
+      "explicacion": "A esta edad buscan independencia, y muchos padres lo viven como distancia o rechazo.",
+      "recomendacion": "Cambia el control por acuerdos y busca actividades compartidas sin presión para platicar.",
+      "temas": ["comunicacion", "pantallas", "berrinches", "saludo_inicial"]
+    }
+  ]
+}

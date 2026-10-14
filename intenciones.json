@@ -1,0 +1,271 @@
+{
+  "_nota": "Cada intención tiene palabras clave (texto normalizado: minúsculas, sin acentos; * = cualquier terminación) y respuestas. 'por_edad' elige el texto según la edad del niño o del grupo. Variables disponibles: {nombre}, {hijo}, {edad}, {area_baja}.",
+  "intenciones": [
+    {
+      "id": "saludo",
+      "nombre": "Saludo",
+      "palabras": [
+        "hola",
+        "buenos dias",
+        "buenas tardes",
+        "buenas noches",
+        "que tal"
+      ],
+      "respuesta": "¡Hola, {nombre}! ¿En qué te acompaño hoy?",
+      "botones": [
+        "Me siento estresada/o",
+        "Problemas para dormir",
+        "¿Cómo lleno mi bitácora?"
+      ]
+    },
+    {
+      "id": "estres",
+      "nombre": "Estrés y cansancio",
+      "palabras": [
+        "estres*",
+        "estresad*",
+        "cansad*",
+        "agotad*",
+        "abrumad*",
+        "ansios*",
+        "harta",
+        "harto",
+        "me siento mal",
+        "sin energia"
+      ],
+      "respuesta": "Cuidar a otros cansa, y que lo notes ya es un buen paso. Te propongo algo pequeño para hoy: elige un momento de 10 minutos solo para ti y anótalo en tu bitácora. Tu área más baja en la Rueda de la Vida es «{area_baja}»; podemos empezar por ahí.",
+      "botones": [
+        "Ideas para tiempo para mí",
+        "¿Cómo lleno mi bitácora?",
+        "Ver mi Rueda de la Vida"
+      ]
+    },
+    {
+      "id": "sueno",
+      "nombre": "Sueño",
+      "palabras": [
+        "dormir",
+        "duerme",
+        "sueno",
+        "insomnio",
+        "despierta en la noche",
+        "se despierta",
+        "desvela*"
+      ],
+      "por_edad": {
+        "0-5": "A los {edad} años, una rutina corta y siempre igual ayuda mucho: baño, cuento y luz baja a la misma hora. Evita pantallas una hora antes de dormir.",
+        "6-11": "A los {edad} años conviene acordar juntos una hora fija de dormir y dejar las pantallas fuera del cuarto. Un rato de plática tranquila antes de apagar la luz ayuda a cerrar el día.",
+        "12-18": "En la adolescencia el reloj biológico se recorre y es normal que quieran dormir más tarde. Ayuda negociar una hora para dejar el celular fuera del cuarto en lugar de imponer la hora de dormir."
+      },
+      "botones": [
+        "Pantallas y celular",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "berrinches",
+      "nombre": "Berrinches y conducta",
+      "palabras": [
+        "berrinche*",
+        "rabieta*",
+        "grita",
+        "gritos",
+        "no obedece",
+        "no me hace caso",
+        "pataleta*",
+        "se enoja",
+        "pelea*",
+        "se pelean"
+      ],
+      "por_edad": {
+        "0-5": "A los {edad} años los berrinches son parte del desarrollo: todavía no sabe poner en palabras lo que siente. Mantén la calma, ponle nombre a la emoción («estás enojado porque…») y espera a que pase antes de hablar del límite.",
+        "6-11": "A los {edad} años ya puede entender reglas y consecuencias. Acuerden pocas reglas claras, y cuando haya pelea, separen y hablen después, con calma, de qué pasó y cómo repararlo.",
+        "12-18": "En la adolescencia el enojo suele esconder otras cosas: presión, cansancio o necesidad de autonomía. Evita discutir en caliente y busquen un momento tranquilo para escuchar primero."
+      },
+      "botones": [
+        "Me siento estresada/o",
+        "Hablar con mi hijo/a"
+      ]
+    },
+    {
+      "id": "pantallas",
+      "nombre": "Pantallas y celular",
+      "palabras": [
+        "celular",
+        "pantalla*",
+        "tablet*",
+        "videojuego*",
+        "redes sociales",
+        "tiktok",
+        "internet",
+        "telefono"
+      ],
+      "por_edad": {
+        "0-5": "Antes de los 5 años se recomienda que las pantallas sean pocas y acompañadas. Elige contenido corto y velo junto con {hijo} para platicarlo.",
+        "6-11": "A los {edad} años funciona tener horarios claros de pantalla y que los dispositivos se usen en espacios comunes de la casa.",
+        "12-18": "Con adolescentes funciona mejor acordar que imponer: horarios sin celular (comidas, antes de dormir) que también cumplan los adultos. Pregunta qué ve y con quién habla, sin interrogatorio."
+      },
+      "botones": [
+        "Problemas para dormir",
+        "Hablar con mi hijo/a"
+      ]
+    },
+    {
+      "id": "comunicacion",
+      "nombre": "Comunicación con hijos",
+      "palabras": [
+        "no me habla",
+        "no me cuenta",
+        "hablar con mi hij*",
+        "comunicacion",
+        "se encierra",
+        "distante",
+        "no quiere hablar",
+        "hablo con mi hij*",
+        "como hablo",
+        "como le hablo",
+        "hablar con"
+      ],
+      "por_edad": {
+        "0-5": "A esta edad la comunicación pasa mucho por el juego. Diez minutos diarios de juego libre, dejando que {hijo} dirija, fortalecen mucho el vínculo.",
+        "6-11": "Pregunta cosas concretas en lugar de «¿cómo te fue?»: «¿qué fue lo más divertido de hoy?». Los trayectos en coche o caminando son buenos momentos para platicar.",
+        "12-18": "Es normal que a los {edad} años busquen más privacidad. Mantén espacios sin presión, como cocinar o manejar juntos, y escucha sin dar sermón; eso abre la puerta a que te cuenten más."
+      },
+      "botones": [
+        "Pantallas y celular",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "escuela",
+      "nombre": "Escuela y tareas",
+      "palabras": [
+        "tarea*",
+        "escuela",
+        "calificacion*",
+        "examen*",
+        "maestr*",
+        "reprob*",
+        "estudiar"
+      ],
+      "por_edad": {
+        "0-5": "En preescolar lo más importante es el juego y la curiosidad. Leer juntos un cuento al día ayuda más que cualquier tarea.",
+        "6-11": "Un lugar fijo y una hora fija para la tarea ayudan mucho. Acompaña sin hacerla por {hijo}, y divide las tareas largas en partes cortas.",
+        "12-18": "En secundaria y prepa ayuda que organicen su propia agenda. Pregunta cómo puedes apoyar en lugar de revisar todo; si las calificaciones bajan de golpe, vale la pena platicar qué más está pasando."
+      },
+      "botones": [
+        "Hablar con mi hijo/a",
+        "Me siento estresada/o"
+      ]
+    },
+    {
+      "id": "grupo",
+      "nombre": "Manejo de grupo (docentes)",
+      "palabras": [
+        "grupo",
+        "alumn*",
+        "salon",
+        "clase",
+        "estudiantes",
+        "conflicto en el grupo",
+        "bullying",
+        "acoso escolar"
+      ],
+      "por_edad": {
+        "0-5": "Con grupos pequeños, las rutinas visuales y los cambios anunciados con tiempo reducen mucho los conflictos.",
+        "6-11": "Acuerdos de grupo escritos entre todos y revisados cada semana funcionan bien a esta edad.",
+        "12-18": "Con adolescentes ayuda dar voz al grupo: asambleas cortas para acordar reglas y espacios para hablar de lo que les preocupa. Si hay acoso escolar, documenta lo que observas y sigue el protocolo de tu escuela."
+      },
+      "botones": [
+        "Me siento estresada/o",
+        "Ver mi Rueda de la Vida"
+      ]
+    },
+    {
+      "id": "tiempo_para_mi",
+      "nombre": "Autocuidado",
+      "palabras": [
+        "tiempo para mi",
+        "autocuidado",
+        "ideas para tiempo",
+        "descansar",
+        "relajar*",
+        "para mi"
+      ],
+      "respuesta": "Algunas ideas de 10 a 15 minutos: caminar sin el celular, tomar un café sentada/o sin hacer nada más, llamar a una amiga o amigo, o escuchar una canción que te guste. No tiene que ser mucho; lo importante es que sea seguido.",
+      "botones": [
+        "¿Cómo lleno mi bitácora?",
+        "Ver mi Rueda de la Vida"
+      ]
+    },
+    {
+      "id": "ayuda_bitacora",
+      "nombre": "Ayuda: bitácora",
+      "palabras": [
+        "bitacora",
+        "registrar mi dia",
+        "llenar",
+        "registro diario"
+      ],
+      "respuesta": "La bitácora es tu registro diario. Cada día anotas tu nivel de energía y de estrés del 1 al 5 y, si quieres, qué te detonó (ruido, prisas, cansancio…). Con eso puedo darte un seguimiento más personal. Toma menos de un minuto.",
+      "botones": [
+        "Ver mi Rueda de la Vida",
+        "¿Qué es el Oráculo?"
+      ]
+    },
+    {
+      "id": "ayuda_rueda",
+      "nombre": "Ayuda: Rueda de la Vida",
+      "palabras": [
+        "rueda de la vida",
+        "rueda",
+        "mis areas",
+        "ver mi rueda"
+      ],
+      "respuesta": "La Rueda de la Vida califica del 1 al 10 ocho áreas: salud, emociones, pareja, familia, trabajo, finanzas, vida social y tiempo para ti. Tu área más baja ahora es «{area_baja}». Puedes verla en el panel de tu perfil.",
+      "botones": [
+        "Ideas para tiempo para mí",
+        "¿Cómo lleno mi bitácora?"
+      ]
+    },
+    {
+      "id": "ayuda_oraculo",
+      "nombre": "Ayuda: Oráculo",
+      "palabras": [
+        "oraculo",
+        "asistente",
+        "que haces",
+        "quien eres",
+        "como funcionas"
+      ],
+      "respuesta": "Soy el acompañante de Treselefantes. Te ayudo con dudas de crianza según la edad de tus hijos y tu propia etapa, y uso tu bitácora y tu Rueda de la Vida para personalizar lo que te digo. Te oriento, pero no sustituyo a un profesional.",
+      "botones": [
+        "Me siento estresada/o",
+        "¿Cómo lleno mi bitácora?"
+      ]
+    },
+    {
+      "id": "gracias",
+      "nombre": "Agradecimiento / despedida",
+      "palabras": [
+        "gracias",
+        "adios",
+        "hasta luego",
+        "bye",
+        "nos vemos"
+      ],
+      "respuesta": "Con gusto, {nombre}. Aquí estaré cuando lo necesites. Si puedes, llena hoy tu bitácora.",
+      "botones": []
+    }
+  ],
+  "por_defecto": {
+    "respuesta": "No estoy segura de haberte entendido. Todavía estoy aprendiendo. ¿Me ayudas eligiendo uno de estos temas?",
+    "botones": [
+      "Me siento estresada/o",
+      "Problemas para dormir",
+      "Berrinches",
+      "Pantallas y celular",
+      "Escuela y tareas"
+    ]
+  }
+}

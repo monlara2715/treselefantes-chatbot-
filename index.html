@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Treselefantes · Acompañante</title>
+  <meta name="description" content="Prototipo académico del chatbot de acompañamiento de Treselefantes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">3E</span>
+      <div>
+        <strong>Treselefantes</strong>
+        <span class="subtitulo">Acompañante · prototipo</span>
+      </div>
+    </div>
+    <span class="etiqueta-prueba">Datos de prueba</span>
+  </header>
+
+  <!-- Pantalla 1: elegir perfil -->
+  <main id="pantalla-perfiles" class="pantalla">
+    <section class="intro">
+      <h1>¿Con qué perfil quieres probar?</h1>
+      <p>Cada perfil es una persona inventada con su propia bitácora y Rueda de la Vida. El acompañante usa ese historial para personalizar la conversación.</p>
+    </section>
+    <div id="lista-perfiles" class="lista-perfiles" aria-live="polite"></div>
+    <p id="error-carga" class="error" hidden></p>
+  </main>
+
+  <!-- Pantalla 2: chat -->
+  <main id="pantalla-chat" class="pantalla chat-layout" hidden>
+    <aside class="panel" aria-label="Resumen del perfil">
+      <div class="panel-cabecera">
+        <div>
+          <h2 id="perfil-nombre"></h2>
+          <p id="perfil-descripcion" class="muted"></p>
+        </div>
+        <button id="btn-cambiar" class="btn-texto" type="button">Cambiar perfil</button>
+      </div>
+
+      <div class="panel-bloque">
+        <h3>Etapa</h3>
+        <p id="perfil-etapa"></p>
+        <ul id="perfil-hijos" class="chips"></ul>
+      </div>
+
+      <div class="panel-bloque">
+        <h3>Estrés de la semana</h3>
+        <div id="grafica-estres" class="grafica"></div>
+      </div>
+
+      <div class="panel-bloque">
+        <h3>Rueda de la Vida</h3>
+        <ul id="rueda" class="rueda"></ul>
+      </div>
+
+      <div class="panel-bloque">
+        <h3>Cruces cuidador–niño</h3>
+        <ul id="cruces-activos" class="cruces"></ul>
+      </div>
+
+      <div class="panel-bloque panel-registro">
+        <h3>Registro para tableros</h3>
+        <p class="muted"><span id="contador-registro">0</span> interacciones guardadas en este navegador</p>
+        <button id="btn-csv" class="btn-secundario" type="button">Descargar registro (CSV)</button>
+      </div>
+    </aside>
+
+    <section class="chat" aria-label="Conversación">
+      <p class="aviso" role="note">Te oriento, pero no sustituyo a un profesional.</p>
+      <div id="mensajes" class="mensajes" aria-live="polite"></div>
+      <div id="botones-rapidos" class="botones-rapidos"></div>
+      <form id="form-mensaje" class="entrada" autocomplete="off">
+        <label for="campo-mensaje" class="sr-only">Escribe tu mensaje</label>
+        <input id="campo-mensaje" type="text" placeholder="Escribe aquí lo que necesitas…" maxlength="400">
+        <button type="submit" class="btn-primario">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="chatbot.js"></script>
+</body>
+</html>

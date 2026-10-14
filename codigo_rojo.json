@@ -1,0 +1,102 @@
+{
+  "_nota": "Palabras y frases de alerta. Se comparan contra el texto normalizado (minúsculas, sin acentos), como palabras completas. Un * al final significa 'cualquier terminación' (suicid* detecta suicidio, suicidarme...). Revisar con el equipo de Treselefantes antes de cualquier uso real.",
+  "categorias": [
+    {
+      "id": "riesgo_vida",
+      "nombre": "Riesgo para la vida",
+      "frases": [
+        "suicid*",
+        "quitarme la vida",
+        "quiero morir*",
+        "ya no quiero vivir",
+        "matarme",
+        "hacerme dano",
+        "cortarme",
+        "lastimarme",
+        "se quiere morir",
+        "quiere quitarse la vida",
+        "se corta",
+        "se esta cortando",
+        "se lastima a proposito",
+        "quiere morir*"
+      ]
+    },
+    {
+      "id": "violencia",
+      "nombre": "Violencia o abuso",
+      "frases": [
+        "me pega",
+        "me golpea",
+        "le pega a mi hij*",
+        "golpea a mi hij*",
+        "abuso",
+        "abuso sexual",
+        "abusaron",
+        "abusa de",
+        "tocamientos",
+        "la toco",
+        "lo toco",
+        "maltrato",
+        "violencia",
+        "me amenaza",
+        "amenaza con"
+      ]
+    },
+    {
+      "id": "emergencia_medica",
+      "nombre": "Emergencia médica",
+      "frases": [
+        "no respira",
+        "convulsion*",
+        "se intoxico",
+        "se trago",
+        "inconsciente",
+        "no despierta",
+        "esta sangrando mucho"
+      ]
+    },
+    {
+      "id": "nino_perdido",
+      "nombre": "Niña o niño no localizado",
+      "frases": [
+        "desaparecio",
+        "no encuentro a mi hij*",
+        "no lo encuentro",
+        "no la encuentro",
+        "no regreso a casa",
+        "se lo llevaron",
+        "se la llevaron"
+      ]
+    },
+    {
+      "id": "crisis_cuidador",
+      "nombre": "Crisis del cuidador",
+      "frases": [
+        "no puedo mas",
+        "ganas de pegarle",
+        "le voy a pegar",
+        "le voy a hacer algo",
+        "perdi el control",
+        "voy a explotar"
+      ]
+    }
+  ],
+  "protocolo": {
+    "titulo": "Estoy aquí contigo",
+    "mensaje": "Gracias por contármelo. Lo que describes es importante y no tienes que resolverlo sola o solo. Si alguien está en peligro ahora mismo, llama de inmediato a emergencias.",
+    "recursos": [
+      {
+        "nombre": "Emergencias",
+        "telefono": "911",
+        "detalle": "Si hay peligro inmediato para ti o para un niño"
+      },
+      {
+        "nombre": "Línea de la Vida",
+        "telefono": "800 911 2000",
+        "detalle": "Apoyo emocional gratuito, 24 horas"
+      }
+    ],
+    "boton_revision": "Quiero que una persona revise mi caso",
+    "confirmacion_revision": "Registré tu solicitud. En la versión real de Treselefantes, una persona del equipo revisaría tu caso y te contactaría. Mientras tanto, los teléfonos de arriba están disponibles las 24 horas."
+  }
+}

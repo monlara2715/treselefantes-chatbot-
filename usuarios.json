@@ -1,0 +1,87 @@
+{
+  "_nota": "Perfiles 100% inventados para el prototipo. No usar datos reales de personas ni de menores.",
+  "areas_rueda": ["Salud", "Emociones", "Pareja", "Familia", "Trabajo", "Finanzas", "Vida social", "Tiempo para mí"],
+  "perfiles": [
+    {
+      "id": "ana",
+      "nombre": "Ana",
+      "rol": "familia",
+      "descripcion": "Mamá de 47 años, un hijo de 4",
+      "etapa_cuidador": "perimenopausia",
+      "etapa_texto": "Perimenopausia",
+      "hijos": [{ "nombre": "Mateo", "edad": 4 }],
+      "dias_desde_ultimo_acceso": 1,
+      "bitacora": [
+        { "dia": "Lun", "energia": 3, "estres": 2, "detonantes": [] },
+        { "dia": "Mar", "energia": 3, "estres": 3, "detonantes": ["prisas"] },
+        { "dia": "Mié", "energia": 2, "estres": 3, "detonantes": ["ruido"] },
+        { "dia": "Jue", "energia": 3, "estres": 2, "detonantes": [] },
+        { "dia": "Vie", "energia": 2, "estres": 4, "detonantes": ["ruido", "berrinches"] },
+        { "dia": "Sáb", "energia": 2, "estres": 5, "detonantes": ["ruido"] },
+        { "dia": "Dom", "energia": 1, "estres": 4, "detonantes": ["falta de sueño", "ruido"] }
+      ],
+      "rueda": { "Salud": 5, "Emociones": 4, "Pareja": 6, "Familia": 7, "Trabajo": 6, "Finanzas": 6, "Vida social": 3, "Tiempo para mí": 2 }
+    },
+    {
+      "id": "jorge",
+      "nombre": "Jorge",
+      "rol": "familia",
+      "descripcion": "Papá de 42 años, una hija de 14",
+      "etapa_cuidador": "adulto",
+      "etapa_texto": "Adultez media",
+      "hijos": [{ "nombre": "Valeria", "edad": 14 }],
+      "dias_desde_ultimo_acceso": 2,
+      "bitacora": [
+        { "dia": "Lun", "energia": 2, "estres": 3, "detonantes": ["trabajo"] },
+        { "dia": "Mar", "energia": 2, "estres": 3, "detonantes": ["discusión"] },
+        { "dia": "Mié", "energia": 2, "estres": 2, "detonantes": [] },
+        { "dia": "Jue", "energia": 1, "estres": 3, "detonantes": ["celular"] },
+        { "dia": "Vie", "energia": 2, "estres": 3, "detonantes": ["trabajo"] },
+        { "dia": "Sáb", "energia": 3, "estres": 2, "detonantes": [] },
+        { "dia": "Dom", "energia": 2, "estres": 3, "detonantes": ["celular", "discusión"] }
+      ],
+      "rueda": { "Salud": 6, "Emociones": 5, "Pareja": 3, "Familia": 5, "Trabajo": 7, "Finanzas": 6, "Vida social": 5, "Tiempo para mí": 4 }
+    },
+    {
+      "id": "laura",
+      "nombre": "Laura",
+      "rol": "docente",
+      "descripcion": "Docente de secundaria, grupo de 13 a 15 años",
+      "etapa_cuidador": "docente",
+      "etapa_texto": "Docente",
+      "hijos": [],
+      "grupo": { "nombre": "2° B de secundaria", "edad_min": 13, "edad_max": 15 },
+      "dias_desde_ultimo_acceso": 0,
+      "bitacora": [
+        { "dia": "Lun", "energia": 4, "estres": 2, "detonantes": [] },
+        { "dia": "Mar", "energia": 3, "estres": 3, "detonantes": ["conflicto en el grupo"] },
+        { "dia": "Mié", "energia": 3, "estres": 3, "detonantes": ["exámenes"] },
+        { "dia": "Jue", "energia": 3, "estres": 2, "detonantes": [] },
+        { "dia": "Vie", "energia": 2, "estres": 3, "detonantes": ["conflicto en el grupo"] },
+        { "dia": "Sáb", "energia": 4, "estres": 1, "detonantes": [] },
+        { "dia": "Dom", "energia": 4, "estres": 2, "detonantes": [] }
+      ],
+      "rueda": { "Salud": 7, "Emociones": 6, "Pareja": 7, "Familia": 8, "Trabajo": 5, "Finanzas": 5, "Vida social": 6, "Tiempo para mí": 5 }
+    },
+    {
+      "id": "carmen",
+      "nombre": "Carmen",
+      "rol": "familia",
+      "descripcion": "Abuela cuidadora de 66 años, dos nietos de 7 y 10",
+      "etapa_cuidador": "adulto_mayor",
+      "etapa_texto": "Adulta mayor",
+      "hijos": [{ "nombre": "Diego", "edad": 7 }, { "nombre": "Sofía", "edad": 10 }],
+      "dias_desde_ultimo_acceso": 6,
+      "bitacora": [
+        { "dia": "Lun", "energia": 2, "estres": 3, "detonantes": ["tareas"] },
+        { "dia": "Mar", "energia": 2, "estres": 3, "detonantes": ["cansancio"] },
+        { "dia": "Mié", "energia": 3, "estres": 2, "detonantes": [] },
+        { "dia": "Jue", "energia": 2, "estres": 3, "detonantes": ["peleas entre hermanos"] },
+        { "dia": "Vie", "energia": 1, "estres": 4, "detonantes": ["cansancio", "tareas"] },
+        { "dia": "Sáb", "energia": 2, "estres": 3, "detonantes": [] },
+        { "dia": "Dom", "energia": 2, "estres": 2, "detonantes": [] }
+      ],
+      "rueda": { "Salud": 4, "Emociones": 6, "Pareja": 5, "Familia": 8, "Trabajo": 5, "Finanzas": 4, "Vida social": 4, "Tiempo para mí": 3 }
+    }
+  ]
+}
